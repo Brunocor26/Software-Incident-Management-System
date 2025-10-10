@@ -1,1 +1,0 @@
-# Software-Incident-Management-System
