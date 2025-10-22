@@ -1,0 +1,243 @@
+:root {
+  --bg: #ffffff;
+  --text: #111827;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --primary: #111827;
+  --primary-contrast: #ffffff;
+  --pill-high: #ef4444;
+  --pill-medium: #f59e0b;
+  --pill-low: #10b981;
+  --status-open: #2563eb;
+  --status-progress: #7c3aed;
+  --status-closed: #6b7280;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Noto Sans,
+    "Apple Color Emoji", "Segoe UI Emoji";
+  color: var(--text);
+  background: var(--bg);
+}
+
+.container {
+  max-width: 1000px;
+  margin: 24px auto;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  box-shadow: var(--shadow);
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--text);
+  background: #fff;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: var(--primary-contrast);
+  border-color: var(--primary);
+}
+
+.btn-primary:hover {
+  filter: brightness(0.9);
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.filters select,
+.search input {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  background: #fff;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.search button {
+  height: 36px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.table-wrap {
+  margin-top: 16px;
+}
+
+.incidents-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.incidents-table thead th {
+  text-align: left;
+  font-weight: 700;
+  padding: 12px;
+  border-bottom: 2px solid var(--border);
+}
+
+.incidents-table tbody td {
+  padding: 14px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.pill {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.pill-high {
+  background: var(--pill-high);
+}
+
+.pill-medium {
+  background: var(--pill-medium);
+}
+
+.pill-low {
+  background: var(--pill-low);
+}
+
+.status {
+  font-weight: 600;
+}
+
+.status-open {
+  color: var(--status-open);
+}
+
+.status-progress {
+  color: var(--status-progress);
+}
+
+.status-closed {
+  color: var(--status-closed);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/*para o new_incident */
+
+.form-container {
+  max-width: 720px;
+  margin: 40px auto;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+  box-shadow: var(--shadow);
+}
+
+.form-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.form-header h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.back-link {
+  text-decoration: none;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.back-link:hover {
+  color: var(--text);
+}
+
+.incident-form .form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.incident-form label {
+  font-weight: 600;
+}
+
+.incident-form input,
+.incident-form select,
+.incident-form textarea {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font: inherit;
+  background: #fff;
+}
+
+.incident-form .form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>New Incident</title>
+  <link rel="stylesheet" href="incidents.css" />
+</head>
+<body>
+  <div class="form-container">
+    <header class="form-header">
+      <h1>New Incident</h1>
+      <a href="incidents.html" class="back-link">← Back to Incidents</a>
+    </header>
+
+    <form id="incident-form" class="incident-form" novalidate>
+      <div class="form-row">
+        <label for="title">Title *</label>
+        <input id="title" name="title" type="text" placeholder="Short descriptive title" required />
+      </div>
+
+      <div class="form-grid">
+        <div class="form-row">
+          <label for="priority">Priority *</label>
+          <select id="priority" name="priority" required>
+            <option disabled selected value="">Select priority</option>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="category">Category *</label>
+          <select id="category" name="category" required>
+            <option disabled selected value="">Select category</option>
+            <option value="software">Software</option>
+            <option value="network">Network</option>
+            <option value="hardware">Hardware</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="status">Status *</label>
+          <select id="status" name="status" required>
+            <option value="open" selected>Open</option>
+            <option value="in-progress">In Progress</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label for="description">Description</label>
+        <textarea id="description" name="description" rows="5" placeholder="Describe the incident in detail..."></textarea>
+      </div>
+
+      <div class="modal-actions">
+        <a href="incidents.html" class="btn btn-ghost">Cancel</a>
+        <button type="submit" class="btn btn-primary">Save Incident</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="new_incident.js"></script>
+</body>
+</html>
