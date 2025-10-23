@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Incidents</title>
+		<link rel="stylesheet" href="./incidents.css" />
+	</head>
+	<body>
+		<main class="container">
+
+		<header class="page-header">
+			<h1>Incidents</h1>
+			<a class="btn btn-primary" href="./incidents/new_incident.html" id="btn-new-incident">New Incident</a>
+		</header>
+			<section class="toolbar" aria-label="Incidents toolbar">
+				<div class="filters">
+					<label for="filters-select" class="sr-only">Filters</label>
+					<select id="filters-select" name="filters">
+						<option value="">Filters</option>
+						<option value="priority:high">Priority: High</option>
+						<option value="priority:medium">Priority: Medium</option>
+						<option value="priority:low">Priority: Low</option>
+						<option value="category:software">Category: Software</option>
+						<option value="category:network">Category: Network</option>
+						<option value="category:hardware">Category: Hardware</option>
+						<option value="status:open">Status: Open</option>
+						<option value="status:in-progress">Status: In Progress</option>
+						<option value="status:closed">Status: Closed</option>
+					</select>
+				</div>
+
+				<form class="search" role="search" aria-label="Search incidents" action="#" method="get">
+					<label for="search-input" class="sr-only">Search</label>
+					<input id="search-input" name="q" type="search" placeholder="Search" />
+					<button type="submit" class="btn btn-ghost" aria-label="Search">
+						<span class="icon" aria-hidden="true">
+							<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<circle cx="11" cy="11" r="8"></circle>
+								<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+							</svg>
+						</span>
+						<span class="search-text">Search</span>
+					</button>
+				</form>
+			</section>
+
+	
+			<section class="table-wrap" aria-label="Incidents list">
+				<table class="incidents-table">
+					<thead>
+						<tr>
+							<th scope="col">Title</th>
+							<th scope="col">Priority</th>
+							<th scope="col">Category</th>
+							<th scope="col">Status</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><span class="skeleton skeleton-70"></span></td>
+							<td><span class="pill pill-high">High</span></td>
+							<td>Software</td>
+							<td><span class="status status-open">Open</span></td>
+						</tr>
+						<tr>
+							<td><span class="skeleton skeleton-55"></span></td>
+							<td><span class="pill pill-medium">Medium</span></td>
+							<td>Network</td>
+							<td><span class="status status-progress">In Progress</span></td>
+						</tr>
+						<tr>
+							<td><span class="skeleton skeleton-60"></span></td>
+							<td><span class="pill pill-low">Low</span></td>
+							<td>Hardware</td>
+							<td><span class="status status-closed">Closed</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+
+			<nav class="pagination" role="navigation" aria-label="Pagination" id="pagination">
+				<!-- Pagination will be generated dynamically -->
+			</nav>
+		</main>
+
+		<span class="sr-only" id="live-region" role="status" aria-live="polite"></span>
+		
+		<script src="./incidents/incidents.js"></script>
+		<script src="./incidents/incidents-list.js"></script>
+	</body>
+	</html>
