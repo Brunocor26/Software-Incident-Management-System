@@ -27,7 +27,7 @@ form.addEventListener('submit', async (e) => {
             msg.className = 'success';
             console.log('Usuário:', data.user);
 
-            window.location.href = '../incidents/incidents.html'; // HTML de destino
+            window.location.href = '../Dashboard/dashboard.html'; // HTML de destino
         } else {
             msg.textContent = data.error;
             msg.className = 'error';

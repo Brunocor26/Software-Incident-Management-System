@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Software Incident Management System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>SOFTWARE INCIDENT<br>MANAGEMENT SYSTEM</h2>
+    <ul>
+      <li><span>🏠 Dashboard</span></li>
+      <li id="incidents-link"><span>⚠️ Incidents</span></li>
+      <li><span>📁 Reports</span></li>
+      <li><span>⚙️ Settings</span></li>
+    </ul>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+    <h1>Dashboard</h1>
+
+    <div class="cards">
+      <div class="card">
+        <h2 id="openCount">0</h2>
+        <p>Open Incidents</p>
+      </div>
+      <div class="card">
+        <h2 id="closedCount">0</h2>
+        <p>Closed Incidents</p>
+      </div>
+    </div>
+
+    <div class="timeline-title">TIMELINE</div>
+
+    <table id="incidentsTable">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Priority</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Incidentes serão gerados aqui -->
+      </tbody>
+    </table>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

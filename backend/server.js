@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors'); // 🔹 importar cors
+const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
@@ -10,9 +10,9 @@ app.use(express.json());
 
 //Configurar CORS
 app.use(cors({
-  origin: 'http://127.0.0.1:5500',
   credentials: true
 }));
+
 
 // Conectar ao MongoDB
 const mongoURI = process.env.MONGO_URI;
