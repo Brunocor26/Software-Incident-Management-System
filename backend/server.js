@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const authenticateToken = require('./authMiddleware');
 require('dotenv').config();
 
 const app = express();
@@ -35,6 +36,9 @@ const loginRoutes = require('./login/login');
 // Usar rotas
 app.use('/login', loginRoutes);
 
+app.get('/protected', authenticateToken, (req, res) => {
+  res.json({ message: 'Token válido', user: req.user });
+});
 // Iniciar servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`🌍 Servidor a correr na porta ${PORT}`));
