@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const User = require('./Models/userModel'); 
+const User = require('./models/userModel'); 
 
 // Pegar todos os usuários
 router.get('/', async (req, res) => {
