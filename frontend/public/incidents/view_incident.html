@@ -3,27 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>New Incident</title>
+  <title>View Incident</title>
   <link rel="stylesheet" href="incidents.css">
 </head>
 <body>
-  <div class="form-container">
+  <div class="form-container view-incident">
     <header class="form-header">
-      <h1>New Incident</h1>
+      <h1 id="page-title">Incident #<span id="incident-id"></span></h1>
       <a href="incidents.html" class="back-link">← Back to Incidents</a>
     </header>
 
-    <form id="new-incident-form" class="incident-form" novalidate>
+    <form id="incident-form" class="incident-form" novalidate>
       <div class="form-row">
         <label for="title">Title *</label>
-        <input id="title" name="title" type="text" placeholder="Short descriptive title" required>
+        <input id="title" name="title" type="text" required readonly>
       </div>
 
       <div class="form-grid">
         <div class="form-row">
           <label for="priority">Priority *</label>
-          <select id="priority" name="priority" required>
-            <option disabled selected value="">Select priority</option>
+          <select id="priority" name="priority" required disabled>
             <option value="high">High</option>
             <option value="medium">Medium</option>
             <option value="low">Low</option>
@@ -31,8 +30,7 @@
         </div>
         <div class="form-row">
           <label for="category">Category *</label>
-          <select id="category" name="category" required>
-            <option disabled selected value="">Select category</option>
+          <select id="category" name="category" required disabled>
             <option value="software">Software</option>
             <option value="network">Network</option>
             <option value="hardware">Hardware</option>
@@ -40,25 +38,36 @@
         </div>
         <div class="form-row">
           <label for="status">Status *</label>
-          <select id="status" name="status" required>
-            <option value="open" selected>Open</option>
+          <select id="status" name="status" required disabled>
+            <option value="open">Open</option>
             <option value="in-progress">In Progress</option>
+            <option value="closed">Closed</option>
           </select>
         </div>
       </div>
 
       <div class="form-row">
         <label for="description">Description</label>
-        <textarea id="description" name="description" rows="5" placeholder="Describe the incident in detail..."></textarea>
+        <textarea id="description" name="description" rows="5" readonly></textarea>
+      </div>
+
+      <!-- ATTACHMENTS -->
+      <div class="form-row attachments-area">
+        <label>Attachments</label>
+        <div id="drop-zone" class="drop-zone">
+          <input type="file" id="file-input" multiple accept="image/*,.pdf,.txt">
+          <p>Drag & drop files here or <span class="accent">click to browse</span></p>
+        </div>
+        <ul id="file-list" class="file-list"></ul>
       </div>
 
       <div class="modal-actions">
-        <a href="incidents.html" class="btn btn-ghost">Cancel</a>
-        <button type="submit" class="btn btn-primary">Save Incident</button>
+        <button type="button" id="btn-edit" class="btn btn-ghost">Edit</button>
+        <button type="submit" id="btn-save" class="btn btn-primary" disabled>Save</button>
       </div>
     </form>
   </div>
 
-  <script src="new_incident.js"></script>
+  <script src="view_incident.js"></script>
 </body>
 </html>
