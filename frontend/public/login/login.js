@@ -3,8 +3,8 @@ const msg = document.getElementById('message');
 
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
-    const email = document.getElementById('username').value.trim(); 
+
+    const email = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value.trim();
 
     if (!email || !password) {
@@ -27,8 +27,13 @@ form.addEventListener('submit', async (e) => {
             msg.className = 'success';
             console.log('Usuário:', data.user);
 
-            window.location.href = '../Dashboard/dashboard.html'; // HTML de destino
-        } else {
+            // Guardar o token no localStorage
+            localStorage.setItem('token', data.token);
+
+            // Redirecionar para o dashboard
+            window.location.href = '../Dashboard/dashboard.html';
+        }
+        else {
             msg.textContent = data.error;
             msg.className = 'error';
         }
