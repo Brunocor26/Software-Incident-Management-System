@@ -1,32 +1,31 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('incident-form');
+// ---------- UTILS ----------
+const $ = q => document.querySelector(q);
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    // Obter dados do formulário
-    const formData = new FormData(form);
-    const incident = {
-      title: formData.get('title'),
-      priority: formData.get('priority'),
-      category: formData.get('category'),
-      status: formData.get('status'),
-      description: formData.get('description') || '',
-      createdAt: new Date().toISOString()
-    };
+// ---------- FORM ----------
+const form = $('#new-incident-form');
 
-    // Mostrar dados na consola
-    console.log('New Incident:', incident);
+form.addEventListener('submit', e => {
+  e.preventDefault();
 
-    // Simular sucesso e redirecionar (mais para a frente aqui metemos um envio para base de dados)
-    alert('Incident created successfully!');
-    window.location.href = 'incidents.html';
-  });
+  // basic validation
+  if (!form.checkValidity()) { form.reportValidity(); return; }
+
+  // build object
+  const newInc = {
+    id: Date.now(), // simple ID
+    title: form.title.value.trim(),
+    priority: form.priority.value,
+    category: form.category.value,
+    status: form.status.value,
+    description: form.description.value.trim(),
+    attachments: [] // vazio por default
+  };
+
+  // save to localStorage (substituir por fetch depois)
+  const incidents = JSON.parse(localStorage.getItem('incidents') || '[]');
+  incidents.push(newInc);
+  localStorage.setItem('incidents', JSON.stringify(incidents));
+
+  // redirect
+  location.href = 'incidents.html';
 });
-
-
-/*
-guarda como
- New Incident: 
-Object { title: "erro", priority: "high", category: "network", status: "open", description: "", createdAt: "2025-10-22T15:00:16.728Z" }
-*/
