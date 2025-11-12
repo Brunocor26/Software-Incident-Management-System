@@ -54,21 +54,44 @@
     }
 
     // ---------- INIT ----------
-    async function initIncidents() {
-      const tableBody = document.querySelector('.incidents-table tbody');
-      if (!tableBody) return;
-      tableBody.setAttribute('aria-live','polite');
-      tableBody.innerHTML = '<tr class="skeleton"><td colspan="5">Loading…</td></tr>';
+   async function initIncidents() {
+  const tableBody = document.querySelector('.incidents-table tbody');
+  if (!tableBody) return;
+  tableBody.setAttribute('aria-live','polite');
+  tableBody.innerHTML = '<tr class="skeleton"><td colspan="5">Loading…</td></tr>';
 
-      try {
-        const incidents = await getIncidents();
-        tableBody.innerHTML = incidents.length
-          ? incidents.map(createRow).join('')
-          : '<tr class="empty"><td colspan="5">No incidents found.</td></tr>';
-      } catch (err) {
-        console.error(err);
-        tableBody.innerHTML = '<tr class="error"><td colspan="5">Could not load incidents.</td></tr>';
-      }
+  try {
+    let incidents = await getIncidents();
+    renderTable(incidents);
+
+    //  Filtragem 
+    const filterSelect = document.getElementById('filters-select');
+    if (filterSelect) {
+      filterSelect.addEventListener('change', async (e) => {
+        const value = e.target.value;
+        if (!value) {
+          incidents = await getIncidents(); 
+        } else {
+          const [key, val] = value.split(':');
+          const all = await getIncidents();
+          incidents = all.filter(i => i[key] === val);
+        }
+        renderTable(incidents);
+      });
     }
+
+  } catch (err) {
+    console.error(err);
+    tableBody.innerHTML = '<tr class="error"><td colspan="5">Could not load incidents.</td></tr>';
+  }
+
+  //  função para renderizar os incidentes
+  function renderTable(list) {
+    tableBody.innerHTML = list.length
+      ? list.map(createRow).join('')
+      : '<tr class="empty"><td colspan="5">No incidents found.</td></tr>';
+  }
+}
+
 
     document.addEventListener('DOMContentLoaded', initIncidents);
