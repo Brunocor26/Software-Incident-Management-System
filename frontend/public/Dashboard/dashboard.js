@@ -6,7 +6,7 @@ async function verifyToken() {
 
   if (!token) {
     // Se não houver token, redireciona para login
-    alert("Você precisa fazer login primeiro.");
+    alert("Precisa de fazer login primeiro.");
     window.location.href = "../login/login.html"; 
     return false;
   }
@@ -62,26 +62,33 @@ verifyToken().then(isValid => {
 
   function createIncidentRow(incident) {
     const tr = document.createElement("tr");
+
     const titleCell = document.createElement("td");
+    titleCell.setAttribute('data-label', 'Title');
     titleCell.textContent = incident.title;
 
     const categoryCell = document.createElement("td");
+    categoryCell.setAttribute('data-label', 'Category');
     categoryCell.textContent = incident.category;
 
     const priorityCell = document.createElement("td");
+    priorityCell.setAttribute('data-label', 'Priority');
     const prioritySpan = document.createElement("span");
     prioritySpan.textContent = incident.priority;
-    prioritySpan.className = incident.priority === "High" ? "priority-high" :
-                             incident.priority === "Medium" ? "priority-medium" :
-                             "priority-low";
+    // use the same pill classes as `incidents.css`
+    prioritySpan.className = 'pill ' + (incident.priority === "High" ? 'pill-high' :
+                                      incident.priority === "Medium" ? 'pill-medium' :
+                                      'pill-low');
     priorityCell.appendChild(prioritySpan);
 
     const statusCell = document.createElement("td");
+    statusCell.setAttribute('data-label', 'Status');
     const statusSpan = document.createElement("span");
     statusSpan.textContent = incident.status;
-    statusSpan.className = incident.status === "Open" ? "status-open" :
-                           incident.status === "In Progress" ? "status-progress" :
-                           "status-closed";
+    // include the base `status` class so styles like the pulse apply
+    statusSpan.className = 'status ' + (incident.status === "Open" ? 'status-open' :
+                                        incident.status === "In Progress" ? 'status-progress' :
+                                        'status-closed');
     statusCell.appendChild(statusSpan);
 
     tr.appendChild(titleCell);
@@ -101,7 +108,11 @@ verifyToken().then(isValid => {
   document.getElementById("openCount").textContent = openCount;
   document.getElementById("closedCount").textContent = closedCount;
 
-  document.getElementById("incidents-link").addEventListener("click", () => {
-    window.location.href = "../incidents/incidents.html";
-  });
+  const incidentsLink = document.getElementById("incidents-link");
+  if (incidentsLink) {
+    incidentsLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      window.location.href = "../incidents/incidents.html";
+    });
+  }
 });

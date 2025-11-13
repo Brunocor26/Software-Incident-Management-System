@@ -3,27 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard - Software Incident Management System</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Dashboard - Software Incident Management</title>
+  <link rel="stylesheet" href="../dashboard.css">
 </head>
-<body>
 
-  <!-- Sidebar -->
-  <div class="sidebar">
+<body class="dashboard">  
+  <aside class="sidebar">
     <h2>SOFTWARE INCIDENT<br>MANAGEMENT SYSTEM</h2>
     <ul>
-      <li><span>🏠 Dashboard</span></li>
-      <li id="incidents-link"><span>⚠️ Incidents</span></li>
+      <li class="active"><span>🏠 Dashboard</span></li> 
+      <li><a href="../incidents/incidents.html"><span>⚠️ Incidents</span></a></li>
       <li><span>📁 Reports</span></li>
       <li><span>⚙️ Settings</span></li>
     </ul>
-  </div>
+  </aside>
 
-  <!-- Main -->
-  <div class="main">
+  <main class="main-content"> 
     <h1>Dashboard</h1>
 
-    <div class="cards">
+    <section class="cards">
       <div class="card">
         <h2 id="openCount">0</h2>
         <p>Open Incidents</p>
@@ -32,11 +30,11 @@
         <h2 id="closedCount">0</h2>
         <p>Closed Incidents</p>
       </div>
-    </div>
+    </section>
 
-    <div class="timeline-title">TIMELINE</div>
+    <h2 class="section-title">Recent Incidents</h2>
 
-    <table id="incidentsTable">
+    <table id="incidentsTable" class="incidents-table">
       <thead>
         <tr>
           <th>Title</th>
@@ -45,11 +43,9 @@
           <th>Status</th>
         </tr>
       </thead>
-      <tbody>
-        <!-- Incidentes serão gerados aqui -->
-      </tbody>
+      <tbody></tbody>
     </table>
-  </div>
+  </main>
 
   <script src="dashboard.js"></script>
 </body>
