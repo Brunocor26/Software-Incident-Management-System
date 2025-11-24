@@ -24,17 +24,19 @@ if (!mongoURI) {
 }
 
 mongoose.connect(mongoURI)
-  .then(() => console.log('✅ MongoDB conectado com sucesso!'))
+  .then(() => console.log('MongoDB conectado com sucesso!'))
   .catch((err) => {
-    console.error('❌ Erro ao conectar ao MongoDB:', err.message);
+    console.error('Erro ao conectar ao MongoDB:', err.message);
     process.exit(1);
   });
 
 // Importar rotas
 const loginRoutes = require('./login/login');
+const userRoutes = require('./userRoutes');
 
 // Usar rotas
 app.use('/login', loginRoutes);
+app.use('/users', userRoutes);
 
 app.get('/protected', authenticateToken, (req, res) => {
   res.json({ message: 'Token válido', user: req.user });
