@@ -33,7 +33,7 @@ We track **user stories**, **problems** and **tasks** in **[Jira Software](https
 |------|------|
 | Product backlog | https://bafc2.atlassian.net/jira/software/projects/SCRUM/boards/1/backlog |
 | Active board | https://your-team.atlassian.net/jira/software/projects/IM/boards/1 |
-|Current sprint | Sprint 3 |
+|Current sprint | Sprint 4 |
 
 ### Definition of Done (DoD)
 1. Code reviewed & approved in GitHub PR  
@@ -44,10 +44,10 @@ We track **user stories**, **problems** and **tasks** in **[Jira Software](https
 
 ---
 
-## 👥 Team composition for sprint 3
-* **Product Owner** – Daniel Basílio
-* **Scrum Master** – Alexandre Leitão
-* **Devs** – Bruno Correia & Vasco Colaço & Henrique Laia  
+## 👥 Team composition for sprint 4
+* **Product Owner** – Bruno Correia
+* **Scrum Master** – Vasco Colaço
+* **Devs** – Daniel Basílio & Alexandre Santos & Henrique Laia  
 
 ---
 
@@ -91,4 +91,5 @@ To run the tests, you need to have both the backend and frontend servers running
 After running the tests, a report is generated. You can view it by running:
 ```bash
 npx playwright show-report
+
 ```
