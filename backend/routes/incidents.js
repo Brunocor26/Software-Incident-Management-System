@@ -15,9 +15,10 @@ const norm = {
 
 /* summary (cards + timeline) */
 r.get("/summary", async (_req, res) => {
-    const [open, closed, closedIncidents] = await Promise.all([
+    const [open, closed, total, closedIncidents] = await Promise.all([
         Incident.countDocuments({ status: "open" }),
         Incident.countDocuments({ status: "closed" }),
+        Incident.countDocuments({}), // Total count of all incidents
         Incident.find({ status: "closed", "sla.resolvedAt": { $exists: true } }).select("createdAt sla.resolvedAt")
     ]);
 
@@ -42,7 +43,7 @@ r.get("/summary", async (_req, res) => {
     const timeline = await Incident.find().sort({ createdAt: -1 }).limit(10)
         .select("title category priority status createdAt");
 
-    res.json({ open, closed, averageResolutionTime, timeline });
+    res.json({ open, closed, total, averageResolutionTime, timeline });
 });
 
 /* create */
