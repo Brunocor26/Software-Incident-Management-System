@@ -57,3 +57,38 @@ UBI © 2025
 ---
 
 > Sprint reviews & retros every week! – reach out if you have any suggestions!
+
+---
+
+## 🧪 Testing
+This project uses **Playwright** for end-to-end testing.
+
+### Prerequisites
+- Node.js installed
+- Dependencies installed (`npm install`)
+- Playwright browsers installed (`npx playwright install`)
+
+### Running Tests
+To run the tests, you need to have both the backend and frontend servers running.
+
+1. **Start Backend**:
+   ```bash
+   cd backend
+   node server.js
+   ```
+
+2. **Start Frontend** (in a separate terminal):
+   ```bash
+   npx http-server frontend/public -p 8080
+   ```
+
+3. **Run Tests** (in a separate terminal):
+   ```bash
+   npx playwright test
+   ```
+
+### Test Reports
+After running the tests, a report is generated. You can view it by running:
+```bash
+npx playwright show-report
+```
