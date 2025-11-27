@@ -7,7 +7,7 @@ async function verifyToken() {
   if (!token) {
     // Se não houver token, redireciona para login
     alert("Precisa de fazer login primeiro.");
-    window.location.href = "../login/login.html"; 
+    window.location.href = "../login/login.html";
     return false;
   }
 
@@ -35,32 +35,52 @@ async function verifyToken() {
   }
 }
 
-// Verifica token antes de continuar
-verifyToken().then(isValid => {
-  if (!isValid) return;
-
-  const incidents = [
-    {
-      title: "Database connection timeout",
-      category: "Software",
-      priority: "High",
-      status: "Open"
-    },
-    {
-      title: "Network latency issues",
-      category: "Network",
-      priority: "Medium",
-      status: "In Progress"
-    },
-    {
-      title: "Printer not responding",
-      category: "Hardware",
-      priority: "Low",
-      status: "Closed"
+async function fetchDashboardData() {
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      window.location.href = "../login/login.html";
+      return;
     }
-  ];
 
-  function createIncidentRow(incident) {
+    const response = await fetch("http://localhost:3000/api/incidents/summary", {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) {
+      if (response.status === 401) {
+        window.location.href = "../login/login.html";
+      }
+      throw new Error("Failed to fetch dashboard data");
+    }
+
+    const data = await response.json();
+    updateDashboard(data);
+  } catch (error) {
+    console.error("Error loading dashboard:", error);
+  }
+}
+
+function updateDashboard(data) {
+  // Update stats
+  document.getElementById("totalCount").textContent = (data.open + data.closed) || 0; // Total approximation
+  document.getElementById("openCount").textContent = data.open || 0;
+  document.getElementById("closedCount").textContent = data.closed || 0;
+
+  const avgTime = data.averageResolutionTime || 0;
+  let timeDisplay = avgTime + " min";
+  if (avgTime > 60) {
+    timeDisplay = (avgTime / 60).toFixed(1) + " h";
+  }
+  document.getElementById("avgTime").textContent = timeDisplay;
+
+  // Update table
+  const tableBody = document.querySelector("#incidentsTable tbody");
+  tableBody.innerHTML = ""; // Clear existing
+
+  data.timeline.forEach(incident => {
     const tr = document.createElement("tr");
 
     const titleCell = document.createElement("td");
@@ -75,20 +95,18 @@ verifyToken().then(isValid => {
     priorityCell.setAttribute('data-label', 'Priority');
     const prioritySpan = document.createElement("span");
     prioritySpan.textContent = incident.priority;
-    // use the same pill classes as `incidents.css`
-    prioritySpan.className = 'pill ' + (incident.priority === "High" ? 'pill-high' :
-                                      incident.priority === "Medium" ? 'pill-medium' :
-                                      'pill-low');
+    prioritySpan.className = 'pill ' + (incident.priority === "high" ? 'pill-high' :
+      incident.priority === "medium" ? 'pill-medium' :
+        'pill-low');
     priorityCell.appendChild(prioritySpan);
 
     const statusCell = document.createElement("td");
     statusCell.setAttribute('data-label', 'Status');
     const statusSpan = document.createElement("span");
     statusSpan.textContent = incident.status;
-    // include the base `status` class so styles like the pulse apply
-    statusSpan.className = 'status ' + (incident.status === "Open" ? 'status-open' :
-                                        incident.status === "In Progress" ? 'status-progress' :
-                                        'status-closed');
+    statusSpan.className = 'status ' + (incident.status === "open" ? 'status-open' :
+      incident.status === "in-progress" ? 'status-progress' :
+        'status-closed');
     statusCell.appendChild(statusSpan);
 
     tr.appendChild(titleCell);
@@ -96,23 +114,21 @@ verifyToken().then(isValid => {
     tr.appendChild(priorityCell);
     tr.appendChild(statusCell);
 
-    return tr;
-  }
+    tableBody.appendChild(tr);
+  });
+}
 
-  const tableBody = document.querySelector("#incidentsTable tbody");
-  incidents.forEach(incident => tableBody.appendChild(createIncidentRow(incident)));
-
-  const openCount = incidents.filter(i => i.status === "Open").length;
-  const closedCount = incidents.filter(i => i.status === "Closed").length;
-
-  document.getElementById("openCount").textContent = openCount;
-  document.getElementById("closedCount").textContent = closedCount;
-
-  const incidentsLink = document.getElementById("incidents-link");
-  if (incidentsLink) {
-    incidentsLink.addEventListener("click", (e) => {
-      e.preventDefault();
-      window.location.href = "../incidents/incidents.html";
-    });
+document.addEventListener("DOMContentLoaded", async () => {
+  const isValid = await verifyToken();
+  if (isValid) {
+    fetchDashboardData();
   }
 });
+
+const incidentsLink = document.getElementById("incidents-link");
+if (incidentsLink) {
+  incidentsLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    window.location.href = "../incidents/incidents.html";
+  });
+}

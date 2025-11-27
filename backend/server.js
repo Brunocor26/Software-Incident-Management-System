@@ -32,11 +32,11 @@ mongoose.connect(mongoURI)
 
 // Importar rotas
 const loginRoutes = require('./login/login');
-const userRoutes = require('./userRoutes');
+const incidentRoutes = require('./routes/incidents');
 
 // Usar rotas
 app.use('/login', loginRoutes);
-app.use('/users', userRoutes);
+app.use('/api/incidents', incidentRoutes);
 
 app.get('/protected', authenticateToken, (req, res) => {
   res.json({ message: 'Token válido', user: req.user });
