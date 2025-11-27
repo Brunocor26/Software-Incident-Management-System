@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,21 +8,25 @@
   <link rel="stylesheet" href="../dashboard.css">
 </head>
 
-<body class="dashboard">  
+<body class="dashboard">
   <aside class="sidebar">
     <h2>SOFTWARE INCIDENT<br>MANAGEMENT SYSTEM</h2>
     <ul>
-      <li class="active"><span>🏠 Dashboard</span></li> 
+      <li class="active"><span>🏠 Dashboard</span></li>
       <li><a href="../incidents/incidents.html"><span>⚠️ Incidents</span></a></li>
       <li><span>📁 Reports</span></li>
       <li><span>⚙️ Settings</span></li>
     </ul>
   </aside>
 
-  <main class="main-content"> 
+  <main class="main-content">
     <h1>Dashboard</h1>
 
     <section class="cards">
+      <div class="card">
+        <h2 id="totalCount">0</h2>
+        <p>Total Incidents</p>
+      </div>
       <div class="card">
         <h2 id="openCount">0</h2>
         <p>Open Incidents</p>
@@ -29,6 +34,10 @@
       <div class="card">
         <h2 id="closedCount">0</h2>
         <p>Closed Incidents</p>
+      </div>
+      <div class="card">
+        <h2 id="avgTime">0 min</h2>
+        <p>Avg Resolution Time</p>
       </div>
     </section>
 
@@ -49,4 +58,5 @@
 
   <script src="dashboard.js"></script>
 </body>
+
 </html>

@@ -1,5 +1,5 @@
-import { Router } from "express";
-import { Incident } from "../models/Incident.js";
+const { Router } = require("express");
+const { Incident } = require("../models/incidentModel");
 
 const r = Router();
 
@@ -14,14 +14,35 @@ const norm = {
 };
 
 /* summary (cards + timeline) */
-r.get("/__summary/cards", async (_req, res) => {
-    const [open, closed] = await Promise.all([
+r.get("/summary", async (_req, res) => {
+    const [open, closed, closedIncidents] = await Promise.all([
         Incident.countDocuments({ status: "open" }),
-        Incident.countDocuments({ status: "closed" })
+        Incident.countDocuments({ status: "closed" }),
+        Incident.find({ status: "closed", "sla.resolvedAt": { $exists: true } }).select("createdAt sla.resolvedAt")
     ]);
+
+    let totalResolutionTime = 0;
+    let countWithResolutionTime = 0;
+
+    closedIncidents.forEach(inc => {
+        if (inc.createdAt && inc.sla && inc.sla.resolvedAt) {
+            const diff = new Date(inc.sla.resolvedAt) - new Date(inc.createdAt);
+            if (diff > 0) {
+                totalResolutionTime += diff;
+                countWithResolutionTime++;
+            }
+        }
+    });
+
+    // Average in minutes
+    const averageResolutionTime = countWithResolutionTime > 0
+        ? Math.round((totalResolutionTime / countWithResolutionTime) / (1000 * 60))
+        : 0;
+
     const timeline = await Incident.find().sort({ createdAt: -1 }).limit(10)
         .select("title category priority status createdAt");
-    res.json({ open, closed, timeline });
+
+    res.json({ open, closed, averageResolutionTime, timeline });
 });
 
 /* create */
@@ -116,4 +137,4 @@ r.post("/:id/attachments", (_req, res) => {
     res.status(501).json({ error: "Attachments feature is disabled" });
 });
 
-export default r;
+module.exports = r;
