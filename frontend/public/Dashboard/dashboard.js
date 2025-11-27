@@ -65,7 +65,7 @@ async function fetchDashboardData() {
 
 function updateDashboard(data) {
   // Update stats
-  document.getElementById("totalCount").textContent = (data.open + data.closed) || 0; // Total approximation
+  document.getElementById("totalCount").textContent = data.total || 0;
   document.getElementById("openCount").textContent = data.open || 0;
   document.getElementById("closedCount").textContent = data.closed || 0;
 
@@ -100,6 +100,10 @@ function updateDashboard(data) {
         'pill-low');
     priorityCell.appendChild(prioritySpan);
 
+    const dateCell = document.createElement("td");
+    dateCell.setAttribute('data-label','CreationDate');
+    dateCell.textContent = new Date(incident.createdAt).toLocaleDateString();
+
     const statusCell = document.createElement("td");
     statusCell.setAttribute('data-label', 'Status');
     const statusSpan = document.createElement("span");
@@ -113,6 +117,8 @@ function updateDashboard(data) {
     tr.appendChild(categoryCell);
     tr.appendChild(priorityCell);
     tr.appendChild(statusCell);
+    tr.appendChild(dateCell);
+    
 
     tableBody.appendChild(tr);
   });
