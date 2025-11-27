@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const authenticateToken = require('./authMiddleware');
+const authenticateToken = require('./middleware/authMiddleware');
 require('dotenv').config();
 
 const app = express();
@@ -15,28 +15,20 @@ app.use(cors({
 }));
 
 
+const connectDB = require('./config/db');
+
 // Conectar ao MongoDB
-const mongoURI = process.env.MONGO_URI;
-
-if (!mongoURI) {
-  console.error('❌ ERRO: A variável MONGO_URI não está definida no ficheiro .env');
-  process.exit(1);
-}
-
-mongoose.connect(mongoURI)
-  .then(() => console.log('MongoDB conectado com sucesso!'))
-  .catch((err) => {
-    console.error('Erro ao conectar ao MongoDB:', err.message);
-    process.exit(1);
-  });
+connectDB();
 
 // Importar rotas
-const loginRoutes = require('./login/login');
+const loginRoutes = require('./routes/authRoutes');
 const incidentRoutes = require('./routes/incidents');
+const userRoutes = require('./routes/userRoutes');
 
 // Usar rotas
 app.use('/login', loginRoutes);
 app.use('/api/incidents', incidentRoutes);
+app.use('/users', userRoutes);
 
 app.get('/protected', authenticateToken, (req, res) => {
   res.json({ message: 'Token válido', user: req.user });

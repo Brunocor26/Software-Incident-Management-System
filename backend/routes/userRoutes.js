@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const User = require('./models/userModel');
+const User = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 
 // Pegar todos os usuários
@@ -22,6 +22,19 @@ router.post('/', async (req, res) => {
         res.status(201).json(user);
     } catch (err) {
         res.status(400).json({ error: err.message });
+    }
+});
+
+// Deletar um usuário por email (para testes)
+router.delete('/:email', async (req, res) => {
+    try {
+        const deletedUser = await User.findOneAndDelete({ email: req.params.email });
+        if (!deletedUser) {
+            return res.status(404).json({ error: 'Usuário não encontrado' });
+        }
+        res.json({ message: 'Usuário deletado com sucesso' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
 });
 
