@@ -74,6 +74,8 @@ function createRow(inc) {
         </tr>`;
 }
 
+let allIncidents = [];
+
 // ---------- INIT ----------
 async function initIncidents() {
   const tableBody = document.querySelector('.incidents-table tbody');
@@ -83,7 +85,9 @@ async function initIncidents() {
 
   try {
     let incidents = await getIncidents();
+    allIncidents = incidents; // guardar lista completa
     renderTable(incidents);
+
 
     //  Filtragem 
     const filterSelect = document.getElementById('filters-select');
@@ -112,7 +116,32 @@ async function initIncidents() {
       ? list.map(createRow).join('')
       : '<tr class="empty"><td colspan="5">No incidents found.</td></tr>';
   }
-}
 
+    // --- PESQUISA ---
+  const searchForm = document.querySelector(".search");
+  const searchInput = document.getElementById("search-input");
+
+  if (searchForm && searchInput) {
+    searchForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const query = searchInput.value.trim().toLowerCase();
+      if (!query) {
+        renderTable(allIncidents);
+        return;
+      }
+
+      const filtered = allIncidents.filter(inc =>
+        inc.title.toLowerCase().includes(query) ||
+        inc.category.toLowerCase().includes(query) ||
+        inc.priority.toLowerCase().includes(query) ||
+        inc.status.toLowerCase().includes(query) ||
+        inc._id.toLowerCase().includes(query)
+      );
+
+      renderTable(filtered);
+    });
+  }
+}
 
 document.addEventListener('DOMContentLoaded', initIncidents);
