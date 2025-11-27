@@ -113,18 +113,32 @@ r.patch("/:id/status", async (req, res) => {
     }
 });
 
-/* patch genérico */
+/* patch genérico (incluindo status) */
 r.patch("/:id", async (req, res) => {
     try {
-        const allowed = ["title", "description", "category", "priority", "assignedTo", "tags"];
+        const allowed = ["title", "description", "category", "priority", "assignedTo", "tags", "status"];
         const body = Object.fromEntries(
             Object.entries(req.body).filter(([k]) => allowed.includes(k))
         );
         if (body.category) body.category = norm.category(body.category);
         if (body.priority) body.priority = norm.priority(body.priority);
 
+        let pushTimeline = {};
+        if (body.status) {
+            body.status = norm.status(body.status);
+            if (body.status === "closed") body["sla.resolvedAt"] = new Date();
+
+            // Check if status actually changed (optional optimization, but good for timeline)
+            const current = await Incident.findById(req.params.id);
+            if (current && current.status !== body.status) {
+                pushTimeline = { $push: { timeline: { at: new Date(), action: "status_change", note: body.status } } };
+            }
+        }
+
         const doc = await Incident.findByIdAndUpdate(
-            req.params.id, body, { new: true, runValidators: true }
+            req.params.id,
+            { ...body, ...pushTimeline },
+            { new: true, runValidators: true }
         );
         if (!doc) return res.status(404).json({ error: "Not found" });
         res.json(doc);
@@ -133,9 +147,81 @@ r.patch("/:id", async (req, res) => {
     }
 });
 
-/* attachments desativados (stub) */
-r.post("/:id/attachments", (_req, res) => {
-    res.status(501).json({ error: "Attachments feature is disabled" });
+/* attachments upload */
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        const dir = path.join(__dirname, "../uploads");
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir, { recursive: true });
+        }
+        cb(null, dir);
+    },
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+        cb(null, uniqueSuffix + "-" + file.originalname);
+    }
+});
+
+const upload = multer({ storage: storage });
+
+r.post("/:id/attachments", upload.array("files"), async (req, res) => {
+    try {
+        if (!req.files || req.files.length === 0) {
+            return res.status(400).json({ error: "No files uploaded" });
+        }
+
+        const attachments = req.files.map(f => ({
+            filename: f.originalname,
+            url: `/uploads/${f.filename}`,
+            mimeType: f.mimetype,
+            size: f.size
+        }));
+
+        const doc = await Incident.findByIdAndUpdate(
+            req.params.id,
+            { $push: { attachments: { $each: attachments } } },
+            { new: true }
+        );
+
+        if (!doc) return res.status(404).json({ error: "Not found" });
+        res.json(doc);
+    } catch (e) {
+        res.status(400).json({ error: e.message });
+    }
+});
+
+/* delete attachment */
+r.delete("/:id/attachments/:filename", async (req, res) => {
+    try {
+        const { id, filename } = req.params;
+
+        // 1. Remove from DB
+        const doc = await Incident.findByIdAndUpdate(
+            id,
+            { $pull: { attachments: { filename: filename } } },
+            { new: true }
+        );
+
+        if (!doc) return res.status(404).json({ error: "Incident not found" });
+
+        // 2. Remove from filesystem
+        // Note: In a real app, we might want to store the full path or ID to be safer, 
+        // but here we rely on the filename being unique enough (it has a timestamp prefix).
+        // Also, we should check if the file is actually used by other incidents if we were deduplicating,
+        // but here files are unique per upload.
+        const filePath = path.join(__dirname, "../uploads", filename);
+        if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
+        }
+
+        res.json(doc);
+    } catch (e) {
+        res.status(400).json({ error: e.message });
+    }
 });
 
 module.exports = r;

@@ -8,6 +8,7 @@ const app = express();
 
 // Middleware para JSON
 app.use(express.json());
+app.use('/uploads', express.static('uploads'));
 
 //Configurar CORS
 app.use(cors({

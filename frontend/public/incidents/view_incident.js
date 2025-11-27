@@ -52,7 +52,13 @@ async function loadIncident() {
     categorySel.value = inc.category;
     statusSel.value = inc.status;
     descTxt.value = inc.description || '';
-    attachments = inc.attachments || [];
+
+    // Normalize existing attachments
+    attachments = (inc.attachments || []).map(a => ({
+      name: a.filename,
+      size: a.size,
+      url: a.url
+    }));
     renderFiles();
   } catch (err) {
     console.error(err);
@@ -83,11 +89,11 @@ form.addEventListener('submit', async e => {
       priority: prioritySel.value,
       category: categorySel.value,
       description: descTxt.value.trim(),
-      // attachments - backend doesn't support attachments yet, but we keep the UI logic
+      status: statusSel.value
     };
 
-    // First patch generic fields
-    let res = await fetch(`http://localhost:3000/api/incidents/${id}`, {
+    // 1. Update incident fields
+    const res = await fetch(`http://localhost:3000/api/incidents/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -96,22 +102,24 @@ form.addEventListener('submit', async e => {
       body: JSON.stringify(body)
     });
 
-    if (!res.ok) throw new Error('Failed to update incident details');
-
-    // Then patch status if changed (separate endpoint in backend)
-    // We can just send it, if it's the same the backend might process it or we could check.
-    // The backend `PATCH /:id` doesn't include status, `PATCH /:id/status` does.
-
-    res = await fetch(`http://localhost:3000/api/incidents/${id}/status`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({ status: statusSel.value })
-    });
-
     if (!res.ok) throw new Error('Failed to update status');
+
+    // 2. Upload new files
+    const newFiles = attachments.filter(a => a.file);
+    if (newFiles.length > 0) {
+      const formData = new FormData();
+      newFiles.forEach(a => formData.append('files', a.file));
+
+      const resUpload = await fetch(`http://localhost:3000/api/incidents/${id}/attachments`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        body: formData
+      });
+
+      if (!resUpload.ok) throw new Error('Failed to upload files');
+    }
 
     alert('Saved!');
     location.reload();
@@ -139,7 +147,7 @@ function handleFiles(files) {
   [...files].forEach(f => {
     const reader = new FileReader();
     reader.onload = () => {
-      attachments.push({ name: f.name, size: f.size, dataURL: reader.result });
+      attachments.push({ name: f.name, size: f.size, dataURL: reader.result, file: f });
       renderFiles();
     };
     reader.readAsDataURL(f);
@@ -147,15 +155,51 @@ function handleFiles(files) {
 }
 
 function renderFiles() {
-  fileList.innerHTML = attachments.map((f, i) => `
+  fileList.innerHTML = attachments.map((f, i) => {
+    const isExisting = !f.file; // If no file object, it's from DB
+    const viewLink = isExisting
+      ? `<a href="http://localhost:3000${f.url}" target="_blank" class="view-link">View</a>`
+      : '<span class="new-badge">New</span>';
+
+    return `
     <li>
-      <span>${f.name} (${(f.size / 1024).toFixed(1)} KB)</span>
+      <div class="file-info">
+        <span>${f.name} (${(f.size / 1024).toFixed(1)} KB)</span>
+        ${viewLink}
+      </div>
       <button type="button" class="remove" data-i="${i}">×</button>
-    </li>`).join('');
+    </li>`;
+  }).join('');
+
   fileList.querySelectorAll('.remove').forEach(btn =>
-    btn.addEventListener('click', e => {
-      attachments.splice(e.target.dataset.i, 1);
-      renderFiles();
+    btn.addEventListener('click', async e => {
+      const i = e.target.dataset.i;
+      const file = attachments[i];
+
+      if (file.file) {
+        // It's a new file, just remove from array
+        attachments.splice(i, 1);
+        renderFiles();
+      } else {
+        // It's an existing file, confirm and delete from server
+        if (!confirm(`Delete attachment "${file.name}"?`)) return;
+
+        try {
+          const token = localStorage.getItem('token');
+          const res = await fetch(`http://localhost:3000/api/incidents/${id}/attachments/${file.name}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+
+          if (!res.ok) throw new Error('Failed to delete attachment');
+
+          attachments.splice(i, 1);
+          renderFiles();
+        } catch (err) {
+          console.error(err);
+          alert('Error deleting attachment');
+        }
+      }
     })
   );
 }
