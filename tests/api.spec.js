@@ -16,6 +16,9 @@ test.describe('API Tests', () => {
         expect(response.ok()).toBeTruthy();
         const body = await response.json();
         expect(body.email).toBe(testUser.email);
+
+        // Cleanup
+        await request.delete(`http://127.0.0.1:3000/users/${testUser.email}`);
     });
 
     test('should login with the registered user', async ({ request }) => {
@@ -40,5 +43,8 @@ test.describe('API Tests', () => {
         const body = await response.json();
         expect(body.token).toBeDefined();
         expect(body.message).toBe('Login bem-sucedido!');
+
+        // Cleanup
+        await request.delete(`http://127.0.0.1:3000/users/${loginUser.email}`);
     });
 });
