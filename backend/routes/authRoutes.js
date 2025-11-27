@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 const User = require('../models/userModel');
 
-const JWT_SECRET = process.env.JWT_SECRET; 
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // POST /login
 router.post('/', async (req, res) => {
@@ -44,6 +44,7 @@ router.post('/', async (req, res) => {
     const token = jwt.sign(
       {
         id: user.id,
+        _id: user._id, // Include MongoDB ObjectId for references
         name: user.name,
         email: user.email,
         papel: user.papel

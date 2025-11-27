@@ -1,6 +1,8 @@
 const { Router } = require("express");
 const { Incident } = require("../models/incidentModel");
 
+const authenticateToken = require("../middleware/authMiddleware");
+
 const r = Router();
 
 /* helpers de normalização (alinhado com o HTML) */
@@ -47,8 +49,10 @@ r.get("/summary", async (_req, res) => {
 });
 
 /* create */
-r.post("/", async (req, res) => {
+r.post("/", authenticateToken, async (req, res) => {
     try {
+        console.log("Creating incident. User:", req.user);
+        console.log("Body:", req.body);
         const b = req.body;
         const doc = await Incident.create({
             title: b.title,
@@ -57,11 +61,13 @@ r.post("/", async (req, res) => {
             status: norm.status(b.status ?? "open"),
             priority: norm.priority(b.priority ?? "low"),
             assignedTo: b.assignedTo ?? null,
-            createdBy: b.createdBy,
+            createdBy: req.user._id,
             tags: b.tags ?? []
         });
+        console.log("Incident created:", doc._id);
         res.status(201).json(doc);
     } catch (e) {
+        console.error("Error creating incident:", e);
         res.status(400).json({ error: e.message });
     }
 });
