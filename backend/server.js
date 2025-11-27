@@ -41,6 +41,10 @@ app.use('/api/incidents', incidentRoutes);
 app.get('/protected', authenticateToken, (req, res) => {
   res.json({ message: 'Token válido', user: req.user });
 });
+
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
 // Iniciar servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`🌍 Servidor a correr na porta ${PORT}`));
