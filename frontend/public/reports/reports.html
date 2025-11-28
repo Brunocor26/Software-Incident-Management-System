@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reports - Software Incident Management</title>
+  <link rel="stylesheet" href="../dashboard.css">
+  <link rel="stylesheet" href="reports.css">
+</head>
+
+<body class="dashboard">
+  <aside class="sidebar">
+    <h2>SOFTWARE INCIDENT<br>MANAGEMENT SYSTEM</h2>
+    <ul>
+      <li><a href="../Dashboard/dashboard.html"><span>🏠 Dashboard</span></a></li>
+      <li><a href="../incidents/incidents.html"><span>⚠️ Incidents</span></a></li>
+      <li class="active"><span>📁 Reports</span></li>
+      <li><a href="../settings/settings.html"><span>⚙️ Settings</span></a></li>
+    </ul>
+  </aside>
+
+  <main class="main-content">
+    <h1>Reports</h1>
+
+    <section class="cards">
+      <div class="card">
+        <h2>24</h2>
+        <p>Total Incidents</p>
+      </div>
+      <div class="card">
+        <h2>8</h2>
+        <p>Open Incidents</p>
+      </div>
+      <div class="card">
+        <h2>16</h2>
+        <p>Closed Incidents</p>
+      </div>
+      <div class="card">
+        <h2>2.5h</h2>
+        <p>Avg Resolution Time</p>
+      </div>
+    </section>
+
+    <h2 class="section-title">Reports Summary</h2>
+
+    <table class="incidents-table">
+      <thead>
+        <tr>
+          <th>Report Type</th>
+          <th>Generated Date</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Monthly Incident Report</td>
+          <td>2025-11-28</td>
+          <td><span class="badge badge-success">Completed</span></td>
+          <td><button class="btn btn-small">Download</button></td>
+        </tr>
+        <tr>
+          <td>Priority Distribution Report</td>
+          <td>2025-11-27</td>
+          <td><span class="badge badge-success">Completed</span></td>
+          <td><button class="btn btn-small">Download</button></td>
+        </tr>
+        <tr>
+          <td>Category Breakdown Report</td>
+          <td>2025-11-26</td>
+          <td><span class="badge badge-success">Completed</span></td>
+          <td><button class="btn btn-small">Download</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+
+  <script src="reports.js"></script>
+</body>
+
+</html>

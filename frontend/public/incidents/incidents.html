@@ -3,13 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Incidents</title>
-<base target="_blank">
-<link rel="stylesheet" href="incidents.css"></link>
+  <title>Incidents - Software Incident Management</title>
+  <link rel="stylesheet" href="../dashboard.css">
+  <link rel="stylesheet" href="incidents.css"></link>
 </head>
 
-<body>
-  <main class="container">
+<body class="dashboard">
+  <aside class="sidebar">
+    <h2>SOFTWARE INCIDENT<br>MANAGEMENT SYSTEM</h2>
+    <ul>
+      <li><a href="../Dashboard/dashboard.html"><span>🏠 Dashboard</span></a></li>
+      <li class="active"><a href="incidents.html"><span>⚠️ Incidents</span></a></li>
+      <li><a href="../reports/reports.html"><span>📁 Reports</span></a></li>
+      <li><a href="../settings/settings.html"><span>⚙️ Settings</span></a></li>
+    </ul>
+  </aside>
+
+  <main class="main-content">
     <header class="page-header">
       <h1>Incidents</h1>
       <a class="btn btn-primary" href="new_incident.html">New Incident</a>
