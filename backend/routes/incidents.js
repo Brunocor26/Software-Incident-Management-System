@@ -54,6 +54,53 @@ r.post("/", authenticateToken, async (req, res) => {
         console.log("Creating incident. User:", req.user);
         console.log("Body:", req.body);
         const b = req.body;
+        // AI Priority Assignment
+        if (!b.priority) {
+            try {
+                console.log("Auto-detecting priority with Groq AI...");
+                const groqResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${process.env.GROQ_API_KEY}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        model: "llama-3.1-8b-instant",
+                        messages: [
+                            {
+                                role: "system",
+                                content: "És um assistente de gestão de incidentes de TI. Analisa o título e a descrição do incidente e atribui uma prioridade: 'low', 'medium' ou 'high'. Retorna APENAS a palavra da prioridade em minúsculas, sem pontuação ou explicação."
+                            },
+                            {
+                                role: "user",
+                                content: `Título: ${b.title}\nDescrição: ${b.description || "Sem descrição fornecida."}`
+                            }
+                        ],
+                        temperature: 0.1,
+                        max_tokens: 10
+                    })
+                });
+
+                if (groqResponse.ok) {
+                    const data = await groqResponse.json();
+                    const aiPriority = data.choices[0]?.message?.content?.trim().toLowerCase();
+                    console.log("AI suggested priority:", aiPriority);
+                    if (["low", "medium", "high"].includes(aiPriority)) {
+                        b.priority = aiPriority;
+                    } else {
+                        console.warn("AI returned invalid priority, defaulting to low.");
+                        b.priority = "low";
+                    }
+                } else {
+                    console.error("Groq API error:", await groqResponse.text());
+                    b.priority = "low";
+                }
+            } catch (error) {
+                console.error("Error calling Groq AI:", error);
+                b.priority = "low";
+            }
+        }
+
         const doc = await Incident.create({
             title: b.title,
             description: b.description ?? "",
@@ -97,6 +144,54 @@ r.get("/:id", async (req, res) => {
     const doc = await Incident.findById(req.params.id);
     if (!doc) return res.status(404).json({ error: "Not found" });
     res.json(doc);
+});
+
+/* AI Suggestion */
+r.get("/:id/ai-suggestion", authenticateToken, async (req, res) => {
+    try {
+        const doc = await Incident.findById(req.params.id);
+        if (!doc) return res.status(404).json({ error: "Not found" });
+
+        if (!["open", "in-progress"].includes(doc.status)) {
+            return res.status(400).json({ error: "Incident is not open or in-progress" });
+        }
+
+        console.log("Generating AI suggestion for incident:", doc._id);
+        const groqResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${process.env.GROQ_API_KEY}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                model: "llama-3.1-8b-instant",
+                messages: [
+                    {
+                        role: "system",
+                        content: "És um especialista em suporte técnico de TI. Com base no título e descrição do incidente, fornece uma lista concisa de 3 a 5 passos recomendados para resolver o problema. Responde em Português. Formata a resposta como uma lista HTML (<ul><li>...</li></ul>) sem tags de markdown ou texto extra."
+                    },
+                    {
+                        role: "user",
+                        content: `Título: ${doc.title}\nDescrição: ${doc.description || "Sem descrição."}\nCategoria: ${doc.category}\nPrioridade: ${doc.priority}`
+                    }
+                ],
+                temperature: 0.3,
+                max_tokens: 300
+            })
+        });
+
+        if (!groqResponse.ok) {
+            throw new Error(await groqResponse.text());
+        }
+
+        const data = await groqResponse.json();
+        const suggestion = data.choices[0]?.message?.content || "Não foi possível gerar uma sugestão.";
+        res.json({ suggestion });
+
+    } catch (e) {
+        console.error("Error generating AI suggestion:", e);
+        res.status(500).json({ error: "Failed to generate suggestion" });
+    }
 });
 
 /* patch status */

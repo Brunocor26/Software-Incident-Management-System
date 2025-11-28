@@ -235,6 +235,11 @@ body {
   padding: 0 1rem;
 }
 
+.form-container.view-incident {
+  max-width: 75rem;
+  /* Wider for side-by-side layout */
+}
+
 .form-header {
   display: flex;
   align-items: center;
@@ -515,5 +520,91 @@ body {
     justify-content: flex-end;
     border-top: 1px solid var(--border);
     margin-top: .5rem;
+  }
+}
+
+/* Layout for View Incident */
+.incident-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 900px) {
+  .incident-layout {
+    grid-template-columns: 2fr 1fr;
+    align-items: start;
+  }
+}
+
+.incident-main {
+  min-width: 0;
+  /* Prevent grid blowout */
+}
+
+/* AI Suggestion Styles */
+.incident-sidebar {
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ai-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.ai-label {
+  color: #7c3aed;
+  /* Vivid Violet */
+  font-weight: 700;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.ai-content {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.ai-content ul {
+  padding-left: 1.25rem;
+  margin: 0;
+}
+
+.ai-content li {
+  margin-bottom: 0.75rem;
+}
+
+/* Dark mode adjustments for AI card */
+@media (prefers-color-scheme: dark) {
+  .ai-card {
+    background: var(--card);
+    border-color: var(--border);
+  }
+
+  .ai-label {
+    color: #a78bfa;
+  }
+
+  .ai-content {
+    color: var(--text);
   }
 }

@@ -13,7 +13,7 @@ form.addEventListener('submit', e => {
   // build object
   const body = {
     title: form.title.value.trim(),
-    priority: form.priority.value,
+    priority: form.priority.value || "",
     category: form.category.value,
     status: form.status.value,
     description: form.description.value.trim()
