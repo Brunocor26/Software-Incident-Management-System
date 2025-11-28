@@ -54,6 +54,53 @@ r.post("/", authenticateToken, async (req, res) => {
         console.log("Creating incident. User:", req.user);
         console.log("Body:", req.body);
         const b = req.body;
+        // AI Priority Assignment
+        if (!b.priority) {
+            try {
+                console.log("Auto-detecting priority with Groq AI...");
+                const groqResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${process.env.GROQ_API_KEY}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        model: "llama-3.1-8b-instant",
+                        messages: [
+                            {
+                                role: "system",
+                                content: "És um assistente de gestão de incidentes de TI. Analisa o título e a descrição do incidente e atribui uma prioridade: 'low', 'medium' ou 'high'. Retorna APENAS a palavra da prioridade em minúsculas, sem pontuação ou explicação."
+                            },
+                            {
+                                role: "user",
+                                content: `Título: ${b.title}\nDescrição: ${b.description || "Sem descrição fornecida."}`
+                            }
+                        ],
+                        temperature: 0.1,
+                        max_tokens: 10
+                    })
+                });
+
+                if (groqResponse.ok) {
+                    const data = await groqResponse.json();
+                    const aiPriority = data.choices[0]?.message?.content?.trim().toLowerCase();
+                    console.log("AI suggested priority:", aiPriority);
+                    if (["low", "medium", "high"].includes(aiPriority)) {
+                        b.priority = aiPriority;
+                    } else {
+                        console.warn("AI returned invalid priority, defaulting to low.");
+                        b.priority = "low";
+                    }
+                } else {
+                    console.error("Groq API error:", await groqResponse.text());
+                    b.priority = "low";
+                }
+            } catch (error) {
+                console.error("Error calling Groq AI:", error);
+                b.priority = "low";
+            }
+        }
+
         const doc = await Incident.create({
             title: b.title,
             description: b.description ?? "",
