@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>View Incident</title>
   <link rel="stylesheet" href="incidents.css">
 </head>
+
 <body>
   <div class="form-container view-incident">
     <header class="form-header">
@@ -14,60 +16,76 @@
     </header>
 
     <form id="incident-form" class="incident-form" novalidate>
-      <div class="form-row">
-        <label for="title">Title *</label>
-        <input id="title" name="title" type="text" required readonly>
-      </div>
+      <div class="incident-layout">
+        <!-- LEFT COLUMN: Incident Details -->
+        <div class="incident-main">
+          <div class="form-row">
+            <label for="title">Title *</label>
+            <input id="title" name="title" type="text" required readonly>
+          </div>
 
-      <div class="form-grid">
-        <div class="form-row">
-          <label for="priority">Priority *</label>
-          <select id="priority" name="priority" required disabled>
-            <option value="high">High</option>
-            <option value="medium">Medium</option>
-            <option value="low">Low</option>
-          </select>
-        </div>
-        <div class="form-row">
-          <label for="category">Category *</label>
-          <select id="category" name="category" required disabled>
-            <option value="software">Software</option>
-            <option value="network">Network</option>
-            <option value="hardware">Hardware</option>
-          </select>
-        </div>
-        <div class="form-row">
-          <label for="status">Status *</label>
-          <select id="status" name="status" required disabled>
-            <option value="open">Open</option>
-            <option value="in-progress">In Progress</option>
-            <option value="closed">Closed</option>
-          </select>
-        </div>
-      </div>
+          <div class="form-grid">
+            <div class="form-row">
+              <label for="priority">Priority *</label>
+              <select id="priority" name="priority" required disabled>
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label for="category">Category *</label>
+              <select id="category" name="category" required disabled>
+                <option value="software">Software</option>
+                <option value="network">Network</option>
+                <option value="hardware">Hardware</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label for="status">Status *</label>
+              <select id="status" name="status" required disabled>
+                <option value="open">Open</option>
+                <option value="in-progress">In Progress</option>
+                <option value="closed">Closed</option>
+              </select>
+            </div>
+          </div>
 
-      <div class="form-row">
-        <label for="description">Description</label>
-        <textarea id="description" name="description" rows="5" readonly></textarea>
-      </div>
+          <div class="form-row">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" rows="5" readonly></textarea>
+          </div>
 
-      <!-- ATTACHMENTS -->
-      <div class="form-row attachments-area">
-        <label>Attachments</label>
-        <div id="drop-zone" class="drop-zone">
-          <input type="file" id="file-input" multiple accept="image/*,.pdf,.txt">
-          <p>Drag & drop files here or <span class="accent">click to browse</span></p>
+          <!-- ATTACHMENTS -->
+          <div class="form-row attachments-area">
+            <label>Attachments</label>
+            <div id="drop-zone" class="drop-zone">
+              <input type="file" id="file-input" multiple accept="image/*,.pdf,.txt">
+              <p>Drag & drop files here or <span class="accent">click to browse</span></p>
+            </div>
+            <ul id="file-list" class="file-list"></ul>
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" id="btn-edit" class="btn btn-ghost">Edit</button>
+            <button type="submit" id="btn-save" class="btn btn-primary" disabled>Save</button>
+          </div>
         </div>
-        <ul id="file-list" class="file-list"></ul>
-      </div>
 
-      <div class="modal-actions">
-        <button type="button" id="btn-edit" class="btn btn-ghost">Edit</button>
-        <button type="submit" id="btn-save" class="btn btn-primary" disabled>Save</button>
+        <!-- RIGHT COLUMN: AI Suggestions -->
+        <div id="ai-suggestion-container" class="incident-sidebar" style="display: none;">
+          <div class="ai-card">
+            <label class="ai-label">✨ AI Resolution Suggestion</label>
+            <div id="ai-suggestion-content" class="ai-content">
+              Loading suggestion...
+            </div>
+          </div>
+        </div>
       </div>
     </form>
   </div>
 
   <script src="view_incident.js"></script>
 </body>
+
 </html>

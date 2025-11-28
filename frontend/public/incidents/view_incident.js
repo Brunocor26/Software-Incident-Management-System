@@ -60,6 +60,29 @@ async function loadIncident() {
       url: a.url
     }));
     renderFiles();
+
+    // AI Suggestion
+    if (["open", "in-progress"].includes(inc.status)) {
+      const aiContainer = $('#ai-suggestion-container');
+      const aiContent = $('#ai-suggestion-content');
+      aiContainer.style.display = 'block';
+
+      try {
+        const aiRes = await fetch(`http://localhost:3000/api/incidents/${id}/ai-suggestion`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (aiRes.ok) {
+          const aiData = await aiRes.json();
+          aiContent.innerHTML = aiData.suggestion;
+        } else {
+          aiContent.textContent = "Unable to load suggestion.";
+        }
+      } catch (e) {
+        console.error("Error loading AI suggestion:", e);
+        aiContent.textContent = "Error loading suggestion.";
+      }
+    }
+
   } catch (err) {
     console.error(err);
     alert('Error loading incident');
