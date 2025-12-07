@@ -46,7 +46,7 @@ const priorityIcon = {
 // ---------- ROW TEMPLATE ----------
 function createRow(inc) {
   return `
-        <tr>
+        <tr onclick="window.location.href='view_incident.html?id=${inc._id}'" style="cursor: pointer;">
           <td data-label="Title">
             <div class="title"><strong>${escapeHtml(inc.title)}</strong>
               <div class="muted">#${inc._id.slice(-6)}</div>
@@ -64,6 +64,7 @@ function createRow(inc) {
           <td class="action-cell" data-label="Actions">
             <a class="btn btn-ghost btn-icon"
                href="view_incident.html?id=${inc._id}"
+               onclick="event.stopPropagation()"
                aria-label="Edit incident ${inc._id}">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828zM5 12.5V15h2.5L15 7.5 12.5 5 5 12.5z"/>
@@ -117,7 +118,7 @@ async function initIncidents() {
       : '<tr class="empty"><td colspan="5">No incidents found.</td></tr>';
   }
 
-    // --- PESQUISA ---
+  // --- PESQUISA ---
   const searchForm = document.querySelector(".search");
   const searchInput = document.getElementById("search-input");
 

@@ -19,6 +19,7 @@ app.use(cors({
 const connectDB = require('./config/db');
 
 // Conectar ao MongoDB
+// Conectar ao MongoDB
 connectDB();
 
 // Importar rotas
@@ -29,7 +30,9 @@ const userRoutes = require('./routes/userRoutes');
 // Usar rotas
 app.use('/login', loginRoutes);
 app.use('/api/incidents', incidentRoutes);
+app.use('/api/monitoring', require('./routes/monitoringRoutes'));
 app.use('/users', userRoutes);
+app.use('/api/git', require('./routes/gitRoutes')); // NEW
 
 app.get('/protected', authenticateToken, (req, res) => {
   res.json({ message: 'Token válido', user: req.user });

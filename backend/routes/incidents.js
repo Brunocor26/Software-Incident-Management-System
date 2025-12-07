@@ -109,6 +109,7 @@ r.post("/", authenticateToken, async (req, res) => {
             priority: norm.priority(b.priority ?? "low"),
             assignedTo: b.assignedTo ?? null,
             createdBy: req.user._id,
+            repoPath: b.repoPath ?? "", // NOVO
             tags: b.tags ?? []
         });
         console.log("Incident created:", doc._id);
@@ -217,7 +218,7 @@ r.patch("/:id/status", async (req, res) => {
 /* patch genérico (incluindo status) */
 r.patch("/:id", async (req, res) => {
     try {
-        const allowed = ["title", "description", "category", "priority", "assignedTo", "tags", "status"];
+        const allowed = ["title", "description", "category", "priority", "assignedTo", "tags", "status", "repoPath"]; // Adicionado repoPath
         const body = Object.fromEntries(
             Object.entries(req.body).filter(([k]) => allowed.includes(k))
         );
@@ -288,7 +289,52 @@ r.post("/:id/attachments", upload.array("files"), async (req, res) => {
             { new: true }
         );
 
+
         if (!doc) return res.status(404).json({ error: "Not found" });
+        res.json(doc);
+    } catch (e) {
+        res.status(400).json({ error: e.message });
+    }
+});
+
+/* ligar commit */
+r.post("/:id/commits", authenticateToken, async (req, res) => {
+    try {
+        const { hash, message, url } = req.body;
+        if (!hash) return res.status(400).json({ error: "Commit hash is required" });
+
+        const doc = await Incident.findByIdAndUpdate(
+            req.params.id,
+            {
+                $push: {
+                    commits: {
+                        hash,
+                        message: message || "Manual link",
+                        url: url || "",
+                        addedAt: new Date()
+                    }
+                }
+            },
+            { new: true }
+        );
+
+        if (!doc) return res.status(404).json({ error: "Incident not found" });
+        res.status(201).json(doc);
+    } catch (e) {
+        res.status(400).json({ error: e.message });
+    }
+});
+
+/* desligar commit */
+r.delete("/:id/commits/:hash", authenticateToken, async (req, res) => {
+    try {
+        const doc = await Incident.findByIdAndUpdate(
+            req.params.id,
+            { $pull: { commits: { hash: req.params.hash } } },
+            { new: true }
+        );
+
+        if (!doc) return res.status(404).json({ error: "Incident not found" });
         res.json(doc);
     } catch (e) {
         res.status(400).json({ error: e.message });

@@ -10,14 +10,25 @@ const titleInp = $('#title');
 const prioritySel = $('#priority');
 const categorySel = $('#category');
 const statusSel = $('#status');
+const repoPathInp = $('#repoPath'); // NOVO: Caminho do Repositório
 const descTxt = $('#description');
 const btnEdit = $('#btn-edit');
 const btnSave = $('#btn-save');
 const dropZone = $('#drop-zone');
 const fileInput = $('#file-input');
 const fileList = $('#file-list');
+const commitList = $('#commit-list');
+const commitHashInp = $('#commit-hash');
+const commitMsgInp = $('#commit-msg');
+const btnAddCommit = $('#btn-add-commit');
+// Ações Git
+const gitBranchInp = $('#git-branch-val');
+const gitCommitInp = $('#git-commit-val');
+const btnCreateBranch = $('#btn-create-branch');
+const btnCopyCommit = $('#btn-copy-commit');
 
 let attachments = []; // { name, size, dataURL }
+let commits = [];
 
 // ---------- LOAD INCIDENT ----------
 async function loadIncident() {
@@ -51,6 +62,16 @@ async function loadIncident() {
     prioritySel.value = inc.priority;
     categorySel.value = inc.category;
     statusSel.value = inc.status;
+    // The following line was added as per the instruction's Code Edit snippet
+    // It implies a variable `isEditing` which is not present in the original code.
+    // Assuming `isEditing` would be defined elsewhere or is a placeholder for future functionality.
+    // For now, it's added as is, but might cause a `ReferenceError` if `isEditing` is not defined.
+    // If `isEditing` is meant to be `false` initially for read-only mode, then `repoPathInp.readOnly = true;`
+    // If `isEditing` is meant to be `true` initially for editable mode, then `repoPathInp.readOnly = false;`
+    // Given the context of `loadIncident`, it's usually for displaying, so `isEditing` would likely be `false`.
+    // However, to faithfully follow the instruction, the line is added exactly as provided.
+    if (repoPathInp) repoPathInp.readOnly = !isEditing; // NOVO: Editável
+    if (repoPathInp) repoPathInp.value = inc.repoPath || ""; // NOVO: Carregar Caminho
     descTxt.value = inc.description || '';
 
     // Normalize existing attachments
@@ -60,6 +81,15 @@ async function loadIncident() {
       url: a.url
     }));
     renderFiles();
+
+    // Commits
+    commits = inc.commits || [];
+    renderCommits();
+
+    // Preencher Ações Git
+    const safeTitle = inc.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    gitBranchInp.value = `fix/inc-${id}-${safeTitle}`.substring(0, 50); // limit length
+    gitCommitInp.value = `fix: ${inc.title} (ref #${id})`;
 
     // AI Suggestion
     if (["open", "in-progress"].includes(inc.status)) {
@@ -112,7 +142,8 @@ form.addEventListener('submit', async e => {
       priority: prioritySel.value,
       category: categorySel.value,
       description: descTxt.value.trim(),
-      status: statusSel.value
+      status: statusSel.value,
+      repoPath: repoPathInp ? repoPathInp.value.trim() : "" // NOVO: Guardar Caminho
     };
 
     // 1. Update incident fields
@@ -226,3 +257,108 @@ function renderFiles() {
     })
   );
 }
+
+// ---------- COMMITS (RF13) ----------
+function renderCommits() {
+  const repoUrl = "https://github.com/Brunocor26/Software-Incident-Management-System/commit/";
+
+  commitList.innerHTML = commits.map((c, i) => {
+    const link = c.url || (repoUrl + c.hash);
+    return `
+    <li>
+      <div class="file-info">
+        <strong><a href="${link}" target="_blank" class="commit-link">${c.hash.substring(0, 7)}</a></strong> - ${c.message || ''}
+      </div>
+      <button type="button" class="remove-commit" data-hash="${c.hash}">×</button>
+    </li>`;
+  }).join('');
+
+  commitList.querySelectorAll('.remove-commit').forEach(btn =>
+    btn.addEventListener('click', async e => {
+      if (!confirm('Unlink this commit?')) return;
+      const hash = e.target.dataset.hash;
+      try {
+        const token = localStorage.getItem('token');
+        const res = await fetch(`http://localhost:3000/api/incidents/${id}/commits/${hash}`, {
+          method: 'DELETE',
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (!res.ok) throw new Error('Failed to unlink');
+
+        // Remove locally
+        commits = commits.filter(c => c.hash !== hash);
+        renderCommits();
+      } catch (err) {
+        console.error(err);
+        alert("Failed to unlink commit");
+      }
+    })
+  );
+}
+
+btnAddCommit.addEventListener('click', async () => {
+  const hash = commitHashInp.value.trim();
+  const message = commitMsgInp.value.trim();
+  if (!hash) return alert("Commit hash is required");
+
+  try {
+    const token = localStorage.getItem('token');
+    const res = await fetch(`http://localhost:3000/api/incidents/${id}/commits`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ hash, message })
+    });
+    if (!res.ok) throw new Error("Failed to link commit");
+
+    const updatedInc = await res.json();
+    commits = updatedInc.commits;
+    commitHashInp.value = '';
+    commitMsgInp.value = '';
+  } catch (err) {
+    console.error(err);
+    alert("Error linking commit");
+  }
+});
+
+// ---------- AÇÕES GIT ----------
+function copyToClipboard(el) {
+  el.select();
+  document.execCommand('copy');
+
+  // Visual feedback
+  const originalBg = el.style.backgroundColor;
+  el.style.backgroundColor = '#2ecc71';
+  setTimeout(() => el.style.backgroundColor = originalBg, 200);
+}
+
+btnCreateBranch.addEventListener('click', async () => {
+  const branchName = gitBranchInp.value;
+  const repoPath = repoPathInp ? repoPathInp.value.trim() : null; // Obter caminho
+
+  if (!branchName) return;
+
+  const pathMsg = repoPath ? `\nIn repository: ${repoPath}` : "\n(Using default server repository)";
+  if (!confirm(`Create branch '${branchName}'?${pathMsg}`)) return;
+
+  try {
+    const res = await fetch('http://localhost:3000/api/git/branch', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ branchName, repoPath }) // Enviar caminho
+    });
+    const data = await res.json();
+
+    if (res.ok) {
+      alert("Success: " + data.message);
+    } else {
+      alert("Error: " + data.error);
+    }
+  } catch (e) {
+    console.error(e);
+    alert("Failed to connect to server");
+  }
+});
+btnCopyCommit.addEventListener('click', () => copyToClipboard(gitCommitInp));

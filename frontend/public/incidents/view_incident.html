@@ -24,6 +24,13 @@
             <input id="title" name="title" type="text" required readonly>
           </div>
 
+          <div class="form-row">
+            <label for="repoPath" style="font-size: 0.9em; color: #94a3b8;">Repository Path (Local) <span
+                style="font-weight: normal; font-size: 0.8em;">(e.g., /Users/me/projects/webapp)</span></label>
+            <input id="repoPath" name="repoPath" type="text" placeholder="Server default (./)" readonly
+              style="font-family: monospace; font-size: 0.9em; background: #0f172a;">
+          </div>
+
           <div class="form-grid">
             <div class="form-row">
               <label for="priority">Priority *</label>
@@ -66,20 +73,65 @@
             <ul id="file-list" class="file-list"></ul>
           </div>
 
+          <!-- LINKED COMMITS -->
+          <div class="form-row">
+            <label>Linked Commits (RF13)</label>
+            <div class="commits-area">
+              <ul id="commit-list" class="file-list"></ul>
+              <div class="commit-form" style="margin-top: 10px; display: flex; gap: 5px;">
+                <input type="text" id="commit-hash" placeholder="Commit Hash" class="form-control" style="flex: 1;">
+                <input type="text" id="commit-msg" placeholder="Message (optional)" class="form-control"
+                  style="flex: 2;">
+                <button type="button" id="btn-add-commit" class="btn btn-ghost" style="padding: 5px 10px;">+
+                  Link</button>
+              </div>
+            </div>
+          </div>
+
           <div class="modal-actions">
             <button type="button" id="btn-edit" class="btn btn-ghost">Edit</button>
             <button type="submit" id="btn-save" class="btn btn-primary" disabled>Save</button>
           </div>
         </div>
 
-        <!-- RIGHT COLUMN: AI Suggestions -->
-        <div id="ai-suggestion-container" class="incident-sidebar" style="display: none;">
-          <div class="ai-card">
+        <!-- RIGHT COLUMN: AI Suggestions & Git Tools -->
+        <div class="incident-sidebar">
+
+          <!-- AI Suggestion -->
+          <div id="ai-suggestion-container" class="ai-card" style="display: none; margin-bottom: 20px;">
             <label class="ai-label">✨ AI Resolution Suggestion</label>
             <div id="ai-suggestion-content" class="ai-content">
               Loading suggestion...
             </div>
           </div>
+
+          <!-- Git Actions (New) -->
+          <div class="ai-card">
+            <label class="ai-label" style="background: #2c3e50; border-color: #34495e;">🛠️ Developer Tools</label>
+            <div class="ai-content" style="display: flex; flex-direction: column; gap: 1rem;">
+
+              <div class="git-action-group">
+                <label style="font-size: 0.8rem; color: #888;">Branch Name</label>
+                <div style="display: flex; gap: 5px;">
+                  <input type="text" id="git-branch-val" readonly class="form-control"
+                    style="font-family: monospace; font-size: 0.9rem; background: #1e293b; color: #e2e8f0; border: 1px solid #334155;">
+                  <button type="button" id="btn-create-branch" class="btn btn-primary" title="Create Branch on Server"
+                    style="background:#8b5cf6;">🚀 Create</button>
+                </div>
+              </div>
+
+              <div class="git-action-group">
+                <label style="font-size: 0.8rem; color: #888;">Commit Message</label>
+                <div style="display: flex; gap: 5px;">
+                  <input type="text" id="git-commit-val" readonly class="form-control"
+                    style="font-family: monospace; font-size: 0.9rem; background: #1e293b; color: #e2e8f0; border: 1px solid #334155;">
+                  <button type="button" id="btn-copy-commit" class="btn btn-ghost" title="Copy">📋</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
         </div>
       </div>
     </form>

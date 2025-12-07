@@ -18,8 +18,15 @@ const IncidentSchema = new mongoose.Schema(
         priority: { type: String, enum: ["low", "medium", "high"], default: "low", index: true },
         assignedTo: { type: mongoose.Types.ObjectId, ref: "User", default: null, index: true },
         createdBy: { type: mongoose.Types.ObjectId, ref: "User", required: true, index: true },
+        repoPath: { type: String, trim: true, default: "" }, // Caminho para o repositório local
         tags: [{ type: String }],
         attachments: [AttachmentSchema],
+        commits: [{
+            hash: { type: String, required: true },
+            message: String,
+            url: String,
+            addedAt: { type: Date, default: Date.now }
+        }],
         timeline: [{
             at: { type: Date, default: Date.now },
             by: { type: mongoose.Types.ObjectId, ref: "User" },
