@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const { Incident } = require("../models/incidentModel");
+const PDFDocument = require("pdfkit");
 
 const authenticateToken = require("../middleware/authMiddleware");
 
@@ -127,6 +128,15 @@ r.get("/", async (req, res) => {
     if (req.query.category) q.category = norm.category(req.query.category);
     if (req.query.assignedTo) q.assignedTo = req.query.assignedTo;
     if (req.query.search) q.$text = { $search: String(req.query.search) };
+    if (req.query.startDate || req.query.endDate) {
+        q.createdAt = {};
+        if (req.query.startDate) q.createdAt.$gte = new Date(req.query.startDate);
+        if (req.query.endDate) {
+            const end = new Date(req.query.endDate);
+            end.setHours(23, 59, 59, 999);
+            q.createdAt.$lte = end;
+        }
+    }
 
     const page = Math.max(parseInt(req.query.page) || 1, 1);
     const limit = Math.min(parseInt(req.query.limit) || 20, 100);
@@ -137,6 +147,57 @@ r.get("/", async (req, res) => {
         Incident.countDocuments(q)
     ]);
     res.json({ page, limit, total, items });
+});
+
+/* report pdf */
+r.get("/report/pdf", async (req, res) => {
+    try {
+        const q = {};
+        if (req.query.status) q.status = norm.status(req.query.status);
+        if (req.query.priority) q.priority = norm.priority(req.query.priority);
+        if (req.query.category) q.category = norm.category(req.query.category);
+        if (req.query.assignedTo) q.assignedTo = req.query.assignedTo;
+        if (req.query.search) q.$text = { $search: String(req.query.search) };
+        if (req.query.startDate || req.query.endDate) {
+            q.createdAt = {};
+            if (req.query.startDate) q.createdAt.$gte = new Date(req.query.startDate);
+            if (req.query.endDate) {
+                const end = new Date(req.query.endDate);
+                end.setHours(23, 59, 59, 999);
+                q.createdAt.$lte = end;
+            }
+        }
+
+        const items = await Incident.find(q).sort({ createdAt: -1 }).populate("assignedTo", "name email");
+
+        const doc = new PDFDocument();
+        res.setHeader("Content-Type", "application/pdf");
+        res.setHeader("Content-Disposition", "attachment; filename=report.pdf");
+
+        doc.pipe(res);
+
+        doc.fontSize(20).text("Relatório de Incidentes", { align: "center" });
+        doc.moveDown();
+
+        doc.fontSize(12).text(`Gerado em: ${new Date().toLocaleString()}`);
+        doc.text(`Filtros: ${JSON.stringify(req.query)}`); // Simplificado para debug/info
+        doc.moveDown();
+
+        items.forEach((item, i) => {
+            doc.fontSize(14).text(`#${i + 1} - ${item.title}`, { underline: true });
+            doc.fontSize(10).text(`Status: ${item.status} | Prioridade: ${item.priority} | Categoria: ${item.category}`);
+            doc.text(`Criado em: ${new Date(item.createdAt).toLocaleString()}`);
+            if (item.assignedTo) doc.text(`Atribuído a: ${item.assignedTo.name} (${item.assignedTo.email})`);
+            doc.text(`Descrição: ${item.description}`);
+            doc.moveDown();
+        });
+
+        doc.end();
+
+    } catch (e) {
+        console.error("Error generating PDF:", e);
+        res.status(500).json({ error: "Failed to generate PDF" });
+    }
 });
 
 /* get by id */

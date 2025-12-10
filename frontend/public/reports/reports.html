@@ -42,36 +42,65 @@
       </div>
     </section>
 
-    <h2 class="section-title">Reports Summary</h2>
+    <h2 class="section-title">Custom Reports</h2>
+
+    <section class="filters-section">
+      <form id="report-filters" class="filters-form">
+        <div class="filter-group">
+          <label for="startDate">Start Date</label>
+          <input type="date" id="startDate" name="startDate">
+        </div>
+        <div class="filter-group">
+          <label for="endDate">End Date</label>
+          <input type="date" id="endDate" name="endDate">
+        </div>
+        <div class="filter-group">
+          <label for="priority">Priority</label>
+          <select id="priority" name="priority">
+            <option value="">All</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="status">Status</label>
+          <select id="status" name="status">
+            <option value="">All</option>
+            <option value="open">Open</option>
+            <option value="in-progress">In Progress</option>
+            <option value="closed">Closed</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="category">Category</label>
+          <select id="category" name="category">
+            <option value="">All</option>
+            <option value="software">Software</option>
+            <option value="hardware">Hardware</option>
+            <option value="network">Network</option>
+          </select>
+        </div>
+        <div class="filter-actions">
+          <button type="submit" class="btn btn-primary">Filter</button>
+          <button type="button" id="export-pdf" class="btn btn-secondary">Export PDF</button>
+        </div>
+      </form>
+    </section>
 
     <table class="incidents-table">
       <thead>
         <tr>
-          <th>Report Type</th>
-          <th>Generated Date</th>
+          <th>Title</th>
+          <th>Date</th>
           <th>Status</th>
-          <th>Actions</th>
+          <th>Priority</th>
+          <th>Category</th>
+          <th>Assigned To</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>Monthly Incident Report</td>
-          <td>2025-11-28</td>
-          <td><span class="badge badge-success">Completed</span></td>
-          <td><button class="btn btn-small">Download</button></td>
-        </tr>
-        <tr>
-          <td>Priority Distribution Report</td>
-          <td>2025-11-27</td>
-          <td><span class="badge badge-success">Completed</span></td>
-          <td><button class="btn btn-small">Download</button></td>
-        </tr>
-        <tr>
-          <td>Category Breakdown Report</td>
-          <td>2025-11-26</td>
-          <td><span class="badge badge-success">Completed</span></td>
-          <td><button class="btn btn-small">Download</button></td>
-        </tr>
+      <tbody id="reports-body">
+        <!-- Results will be populated here -->
       </tbody>
     </table>
   </main>
