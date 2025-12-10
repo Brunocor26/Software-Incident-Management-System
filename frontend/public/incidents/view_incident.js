@@ -61,6 +61,22 @@ async function loadIncident() {
     }));
     renderFiles();
 
+    // Disable editing if incident is closed
+    if (inc.status === "closed") {
+      form.querySelectorAll('input,select,textarea').forEach(el => el.setAttribute('readonly', 'readonly'));
+      form.querySelectorAll('select').forEach(el => el.disabled = true);
+      btnEdit.disabled = true;
+      dropZone.style.pointerEvents = 'none';
+      dropZone.style.opacity = '0.5';
+      fileInput.disabled = true;
+      
+      // Show message
+      const msg = document.createElement('div');
+      msg.style.cssText = 'background-color: #ffe6e6; color: #cc0000; padding: 10px; border-radius: 4px; margin-bottom: 10px; border-left: 4px solid #cc0000;';
+      msg.textContent = '⚠️ Este incidente foi fechado e não pode ser modificado.';
+      form.insertBefore(msg, form.firstChild);
+    }
+
     // AI Suggestion
     if (["open", "in-progress"].includes(inc.status)) {
       const aiContainer = $('#ai-suggestion-container');
@@ -125,7 +141,10 @@ form.addEventListener('submit', async e => {
       body: JSON.stringify(body)
     });
 
-    if (!res.ok) throw new Error('Failed to update status');
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(error.error || 'Failed to update status');
+    }
 
     // 2. Upload new files
     const newFiles = attachments.filter(a => a.file);
@@ -148,7 +167,7 @@ form.addEventListener('submit', async e => {
     location.reload();
   } catch (err) {
     console.error(err);
-    alert('Error saving incident');
+    alert('Error saving incident: ' + err.message);
   }
 });
 

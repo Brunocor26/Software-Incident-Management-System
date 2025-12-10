@@ -197,18 +197,25 @@ r.get("/:id/ai-suggestion", authenticateToken, async (req, res) => {
 /* patch status */
 r.patch("/:id/status", async (req, res) => {
     try {
+        const doc = await Incident.findById(req.params.id);
+        if (!doc) return res.status(404).json({ error: "Not found" });
+        
+        // Prevent modification if incident is already closed
+        if (doc.status === "closed") {
+            return res.status(400).json({ error: "Não é possível modificar um incidente fechado" });
+        }
+        
         const status = norm.status(req.body.status);
         const updates = { status };
         if (status === "closed") updates["sla.resolvedAt"] = new Date();
         const pushTimeline = { $push: { timeline: { at: new Date(), action: "status_change", note: status } } };
 
-        const doc = await Incident.findByIdAndUpdate(
+        const updatedDoc = await Incident.findByIdAndUpdate(
             req.params.id,
             { ...updates, ...pushTimeline },
             { new: true, runValidators: true }
         );
-        if (!doc) return res.status(404).json({ error: "Not found" });
-        res.json(doc);
+        res.json(updatedDoc);
     } catch (e) {
         res.status(400).json({ error: e.message });
     }
@@ -217,6 +224,14 @@ r.patch("/:id/status", async (req, res) => {
 /* patch genérico (incluindo status) */
 r.patch("/:id", async (req, res) => {
     try {
+        // Check if incident is closed
+        const current = await Incident.findById(req.params.id);
+        if (!current) return res.status(404).json({ error: "Not found" });
+        
+        if (current.status === "closed") {
+            return res.status(400).json({ error: "Não é possível modificar um incidente fechado" });
+        }
+        
         const allowed = ["title", "description", "category", "priority", "assignedTo", "tags", "status"];
         const body = Object.fromEntries(
             Object.entries(req.body).filter(([k]) => allowed.includes(k))
@@ -230,8 +245,7 @@ r.patch("/:id", async (req, res) => {
             if (body.status === "closed") body["sla.resolvedAt"] = new Date();
 
             // Check if status actually changed (optional optimization, but good for timeline)
-            const current = await Incident.findById(req.params.id);
-            if (current && current.status !== body.status) {
+            if (current.status !== body.status) {
                 pushTimeline = { $push: { timeline: { at: new Date(), action: "status_change", note: body.status } } };
             }
         }
