@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const { Incident } = require("../models/incidentModel");
+const User = require("../models/userModel");
 const PDFDocument = require("pdfkit");
 
 const authenticateToken = require("../middleware/authMiddleware");
@@ -143,7 +144,7 @@ r.get("/", async (req, res) => {
     const skip = (page - 1) * limit;
 
     const [items, total] = await Promise.all([
-        Incident.find(q).sort({ createdAt: -1 }).skip(skip).limit(limit),
+        Incident.find(q).sort({ createdAt: -1 }).skip(skip).limit(limit).populate('assignedTo', 'name'),
         Incident.countDocuments(q)
     ]);
     res.json({ page, limit, total, items });
@@ -283,7 +284,7 @@ r.patch("/:id/status", async (req, res) => {
 });
 
 /* patch genérico (incluindo status) */
-r.patch("/:id", async (req, res) => {
+r.patch("/:id", authenticateToken, async (req, res) => {
     try {
         // Check if incident is closed
         const current = await Incident.findById(req.params.id);
@@ -298,7 +299,25 @@ r.patch("/:id", async (req, res) => {
             Object.entries(req.body).filter(([k]) => allowed.includes(k))
         );
         if (body.category) body.category = norm.category(body.category);
+        if (body.category) body.category = norm.category(body.category);
         if (body.priority) body.priority = norm.priority(body.priority);
+
+        // Role check for assignment
+        if (body.assignedTo) {
+            // 1. Only "gestorSistemas" can assign
+            if (req.user.papel !== "gestorSistemas") {
+                return res.status(403).json({ error: "Apenas 'gestorSistemas' pode atribuir incidentes." });
+            }
+
+            // 2. Can only assign to "Programador"
+            const assignee = await User.findById(body.assignedTo);
+            if (!assignee) {
+                return res.status(400).json({ error: "Usuário atribuído não encontrado." });
+            }
+            if (assignee.papel !== "Programador") {
+                return res.status(400).json({ error: "Incidentes só podem ser atribuídos a usuários com papel 'Programador'." });
+            }
+        }
 
         let pushTimeline = {};
         if (body.status) {
