@@ -65,7 +65,7 @@ function createRow(inc) {
             ${inc.assignedTo ? `<span class="badge badge-secondary" style="background: #e0f2fe; color: #0369a1;">${inc.assignedTo.name}</span>` : '-'}
           </td>
           <td class="action-cell" data-label="Actions">
-            <button class="btn btn-ghost btn-icon assign-btn" data-id="${inc._id}" aria-label="Assign incident ${inc._id}">
+            <button class="btn btn-ghost btn-icon assign-btn" data-id="${inc._id}" data-status="${inc.status}" aria-label="Assign incident ${inc._id}" style="display: none;">
                <span>Assign</span>
             </button>
             <a class="btn btn-ghost btn-icon"
@@ -74,7 +74,7 @@ function createRow(inc) {
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828zM5 12.5V15h2.5L15 7.5 12.5 5 5 12.5z"/>
               </svg>
-              <span>Editar</span>
+              <span>Edit</span>
             </a>
           </td>
         </tr>`;
@@ -83,7 +83,8 @@ function createRow(inc) {
 let allIncidents = [];
 
 // ---------- INIT ----------
-async function initIncidents() {
+// ---------- INIT ----------
+async function loadIncidents() {
   const tableBody = document.querySelector('.incidents-table tbody');
   if (!tableBody) return;
   tableBody.setAttribute('aria-live', 'polite');
@@ -93,7 +94,48 @@ async function initIncidents() {
     let incidents = await getIncidents();
     allIncidents = incidents; // guardar lista completa
     renderTable(incidents);
+    
+    // Re-apply role check after rendering
+    checkUserRole();
 
+  } catch (err) {
+    console.error(err);
+    tableBody.innerHTML = '<tr class="error"><td colspan="5">Could not load incidents.</td></tr>';
+  }
+}
+
+function renderTable(list) {
+    const tableBody = document.querySelector('.incidents-table tbody');
+    if (!tableBody) return;
+    
+    tableBody.innerHTML = list.length
+      ? list.map(createRow).join('')
+      : '<tr class="empty"><td colspan="5">No incidents found.</td></tr>';
+      
+    checkUserRole();
+}
+
+function checkUserRole() {
+    const token = localStorage.getItem('token');
+    if (token) {
+        try {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            if (payload.papel === 'gestorSistemas') {
+                document.querySelectorAll('.assign-btn').forEach(btn => {
+                    if (btn.dataset.status === 'open') {
+                        btn.style.display = 'inline-flex';
+                    }
+                });
+            }
+        } catch (e) {
+            console.error("Error parsing token", e);
+        }
+    }
+}
+
+async function init() {
+    // Initial load
+    await loadIncidents();
 
     //  Filtragem 
     const filterSelect = document.getElementById('filters-select');
@@ -101,53 +143,37 @@ async function initIncidents() {
       filterSelect.addEventListener('change', async (e) => {
         const value = e.target.value;
         if (!value) {
-          incidents = await getIncidents();
+          renderTable(allIncidents);
         } else {
           const [key, val] = value.split(':');
-          const all = await getIncidents();
-          incidents = all.filter(i => i[key] === val);
+          const filtered = allIncidents.filter(i => i[key] === val);
+          renderTable(filtered);
         }
-        renderTable(incidents);
       });
     }
 
-  } catch (err) {
-    console.error(err);
-    tableBody.innerHTML = '<tr class="error"><td colspan="5">Could not load incidents.</td></tr>';
-  }
-
-  //  função para renderizar os incidentes
-  function renderTable(list) {
-    tableBody.innerHTML = list.length
-      ? list.map(createRow).join('')
-      : '<tr class="empty"><td colspan="5">No incidents found.</td></tr>';
-  }
-
     // --- PESQUISA ---
-  const searchForm = document.querySelector(".search");
-  const searchInput = document.getElementById("search-input");
+    const searchForm = document.querySelector(".search");
+    const searchInput = document.getElementById("search-input");
 
-  if (searchForm && searchInput) {
-    searchForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      const query = searchInput.value.trim().toLowerCase();
-      if (!query) {
-        renderTable(allIncidents);
-        return;
-      }
-
-      const filtered = allIncidents.filter(inc =>
-        inc.title.toLowerCase().includes(query) ||
-        inc.category.toLowerCase().includes(query) ||
-        inc.priority.toLowerCase().includes(query) ||
-        inc.status.toLowerCase().includes(query) ||
-        inc._id.toLowerCase().includes(query)
-      );
-
-      renderTable(filtered);
-    });
-  }
+    if (searchForm && searchInput) {
+        searchForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const query = searchInput.value.trim().toLowerCase();
+            if (!query) {
+                renderTable(allIncidents);
+                return;
+            }
+            const filtered = allIncidents.filter(inc =>
+                inc.title.toLowerCase().includes(query) ||
+                inc.category.toLowerCase().includes(query) ||
+                inc.priority.toLowerCase().includes(query) ||
+                inc.status.toLowerCase().includes(query) ||
+                inc._id.toLowerCase().includes(query)
+            );
+            renderTable(filtered);
+        });
+    }
 
     // --- ASSIGNMENT ---
     const assignModal = document.getElementById('assign-modal');
@@ -158,9 +184,10 @@ async function initIncidents() {
 
     // Fetch users for dropdown
     try {
-        const res = await fetch('http://localhost:3000/users');
+        const res = await fetch('http://localhost:3000/users?role=Programador');
         if (res.ok) {
             const users = await res.json();
+            assignSelect.innerHTML = '<option value="">Select a user...</option>'; // Clear existing
             users.forEach(u => {
                 const opt = document.createElement('option');
                 opt.value = u._id;
@@ -177,8 +204,13 @@ async function initIncidents() {
         if (e.target.closest('.assign-btn')) {
             const btn = e.target.closest('.assign-btn');
             const id = btn.dataset.id;
-            assignInputId.value = id;
-            assignModal.classList.remove('hidden');
+            console.log("Opening modal for incident:", id); // Debug
+            if (id) {
+                assignInputId.value = id;
+                assignModal.classList.remove('hidden');
+            } else {
+                console.error("No ID found on button");
+            }
         }
     });
 
@@ -202,6 +234,13 @@ async function initIncidents() {
             const incidentId = assignInputId.value;
             const userId = assignSelect.value;
             const token = localStorage.getItem('token');
+            
+            console.log("Submitting assignment:", { incidentId, userId }); // Debug
+
+            if (!incidentId) {
+                alert("Error: No incident ID selected");
+                return;
+            }
 
             try {
                 const res = await fetch(`http://localhost:3000/api/incidents/${incidentId}`, {
@@ -215,9 +254,10 @@ async function initIncidents() {
 
                 if (res.ok) {
                     assignModal.classList.add('hidden');
-                    initIncidents(); // Refresh table
+                    loadIncidents(); // Refresh table
                 } else {
-                    alert('Failed to assign incident');
+                    const err = await res.json();
+                    alert('Failed to assign incident: ' + (err.error || 'Unknown error'));
                 }
             } catch (err) {
                 console.error(err);
@@ -227,4 +267,4 @@ async function initIncidents() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', initIncidents);
+document.addEventListener('DOMContentLoaded', init);

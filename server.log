@@ -636,3 +636,8 @@ PATCH /:id called. Body: { assignedTo: '6939ecd4ee38ec5318e17911' }
 Assignment attempt by: reg@test.com Role: User
 Assigning to: 6939ecd4ee38ec5318e17911
 Blocked: Requester is not gestorSistemas
+Email recebido: ricardo.dev@example.com
+Senha recebida: programador123
+JWT_SECRET: minha_chave_secreta
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiX2lkIjoiNjkyNzM5YTU4ZDgxYWI2OWYzODMzNjQyIiwibmFtZSI6IlJpY2FyZG8gR29tZXMiLCJlbWFpbCI6InJpY2FyZG8uZGV2QGV4YW1wbGUuY29tIiwicGFwZWwiOiJQcm9ncmFtYWRvciIsImlhdCI6MTc2NTQ2NzI1NCwiZXhwIjoxNzY1NDgxNjU0fQ.0F9TpgIW65fyaJ5NccATIa6WRk7h4nt84Zt9XuIWDyE

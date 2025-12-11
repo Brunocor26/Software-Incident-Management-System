@@ -3,10 +3,14 @@ const router = express.Router();
 const User = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 
-// Pegar todos os usuários
+// Pegar todos os usuários (opcionalmente filtrados por papel)
 router.get('/', async (req, res) => {
     try {
-        const users = await User.find();
+        const filter = {};
+        if (req.query.role) {
+            filter.papel = req.query.role;
+        }
+        const users = await User.find(filter);
         res.json(users);
     } catch (err) {
         res.status(500).json({ error: err.message });
