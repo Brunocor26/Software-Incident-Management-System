@@ -57,12 +57,31 @@
             <th scope="col">Priority</th>
             <th scope="col">Category</th>
             <th scope="col">Status</th>
+            <th scope="col">Assigned To</th>
             <th scope="col">Actions</th>
           </tr>
         </thead>
         <tbody></tbody>
       </table>
     </section>
+
+    <!-- Assign Modal -->
+    <div id="assign-modal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>Assign Incident</h2>
+        <form id="assign-form">
+          <input type="hidden" id="assign-incident-id">
+          <div class="form-group">
+            <label for="assign-user">Select User</label>
+            <select id="assign-user" required>
+              <option value="">Select a user...</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Assign</button>
+        </form>
+      </div>
+    </div>
   </main>
 
   <script src="incidents.js"></script>

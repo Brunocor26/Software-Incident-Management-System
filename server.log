@@ -1,0 +1,638 @@
+[dotenv@17.2.3] injecting env (0) from .env -- tip: 📡 add observability to secrets: https://dotenvx.com/ops
+[dotenv@17.2.3] injecting env (4) from backend/.env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+🌍 Servidor a correr na porta 3000
+MongoDB conectado com sucesso!
+Email recebido: manager@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Email recebido: manager@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk5LCJfaWQiOiI2OTM5ZWM4ZGVlMzhlYzUzMThlMTc3OWUiLCJuYW1lIjoiTWFuYWdlciIsImVtYWlsIjoibWFuYWdlckB0ZXN0LmNvbSIsInBhcGVsIjoiZ2VzdG9yU2lzdGVtYXMiLCJpYXQiOjE3NjU0MDM3OTAsImV4cCI6MTc2NTQxODE5MH0.dVMicxuq3s3WQJQZ5qvqnt-vF0-w_TMLMfmzFovJ_uo
+Email recebido: manager@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk5LCJfaWQiOiI2OTM5ZWM4ZGVlMzhlYzUzMThlMTc3OWUiLCJuYW1lIjoiTWFuYWdlciIsImVtYWlsIjoibWFuYWdlckB0ZXN0LmNvbSIsInBhcGVsIjoiZ2VzdG9yU2lzdGVtYXMiLCJpYXQiOjE3NjU0MDM3OTAsImV4cCI6MTc2NTQxODE5MH0.dVMicxuq3s3WQJQZ5qvqnt-vF0-w_TMLMfmzFovJ_uo
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk5LCJfaWQiOiI2OTM5ZWM4ZGVlMzhlYzUzMThlMTc3OWUiLCJuYW1lIjoiTWFuYWdlciIsImVtYWlsIjoibWFuYWdlckB0ZXN0LmNvbSIsInBhcGVsIjoiZ2VzdG9yU2lzdGVtYXMiLCJpYXQiOjE3NjU0MDM3OTAsImV4cCI6MTc2NTQxODE5MH0.dVMicxuq3s3WQJQZ5qvqnt-vF0-w_TMLMfmzFovJ_uo
+Email recebido: reg@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Email recebido: reg@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk3LCJfaWQiOiI2OTM5ZWM4ZWVlMzhlYzUzMThlMTc3YWYiLCJuYW1lIjoiUmVndWxhciIsImVtYWlsIjoicmVnQHRlc3QuY29tIiwicGFwZWwiOiJVc2VyIiwiaWF0IjoxNzY1NDAzNzkwLCJleHAiOjE3NjU0MTgxOTB9.3ZDXsACNVHSxWhBY_Lgspu1oJV5hE8lwkFlC42_NiS0
+Creating incident. User: {
+  id: 999,
+  _id: '6939ec8dee38ec5318e1779e',
+  name: 'Manager',
+  email: 'manager@test.com',
+  papel: 'gestorSistemas',
+  iat: 1765403790,
+  exp: 1765418190
+}
+Body: { title: 'Test Incident', category: 'software', priority: 'low' }
+Email recebido: reg@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Email recebido: manager@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Incident created: new ObjectId('6939ec8eee38ec5318e177b7')
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk3LCJfaWQiOiI2OTM5ZWM4ZWVlMzhlYzUzMThlMTc3YWYiLCJuYW1lIjoiUmVndWxhciIsImVtYWlsIjoicmVnQHRlc3QuY29tIiwicGFwZWwiOiJVc2VyIiwiaWF0IjoxNzY1NDAzNzkxLCJleHAiOjE3NjU0MTgxOTF9.sBLR4xwzzlvxtYE4JFLMmyp3BLha9M92wb5TCU0CjZk
+PATCH /:id called. Body: { assignedTo: '6939ec8eee38ec5318e177a9' }
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk5LCJfaWQiOiI2OTM5ZWM4ZGVlMzhlYzUzMThlMTc3OWUiLCJuYW1lIjoiTWFuYWdlciIsImVtYWlsIjoibWFuYWdlckB0ZXN0LmNvbSIsInBhcGVsIjoiZ2VzdG9yU2lzdGVtYXMiLCJpYXQiOjE3NjU0MDM3OTEsImV4cCI6MTc2NTQxODE5MX0.HFJQuXryg3oV-6KY7-fLzyK6KVK-iewVPn_IdkWAYuU
+Creating incident. User: {
+  id: 999,
+  _id: '6939ec8dee38ec5318e1779e',
+  name: 'Manager',
+  email: 'manager@test.com',
+  papel: 'gestorSistemas',
+  iat: 1765403790,
+  exp: 1765418190
+}
+Body: { title: 'Test Incident', category: 'software', priority: 'low' }
+Assignment attempt by: manager@test.com Role: gestorSistemas
+Assigning to: 6939ec8eee38ec5318e177a9
+Incident created: new ObjectId('6939ec8fee38ec5318e177bc')
+Assignee found: prog@test.com Role: Programador
+PATCH /:id called. Body: {}
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk3LCJfaWQiOiI2OTM5ZWM4ZWVlMzhlYzUzMThlMTc3YWYiLCJuYW1lIjoiUmVndWxhciIsImVtYWlsIjoicmVnQHRlc3QuY29tIiwicGFwZWwiOiJVc2VyIiwiaWF0IjoxNzY1NDAzNzkxLCJleHAiOjE3NjU0MTgxOTF9.sBLR4xwzzlvxtYE4JFLMmyp3BLha9M92wb5TCU0CjZk
+Creating incident. User: {
+  id: 999,
+  _id: '6939ec8dee38ec5318e1779e',
+  name: 'Manager',
+  email: 'manager@test.com',
+  papel: 'gestorSistemas',
+  iat: 1765403790,
+  exp: 1765418190
+}
+Body: { title: 'Test Incident', category: 'software', priority: 'low' }
+Email recebido: reg@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Incident created: new ObjectId('6939ec8fee38ec5318e177c7')
+PATCH /:id called. Body: {}
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk3LCJfaWQiOiI2OTM5ZWM4ZWVlMzhlYzUzMThlMTc3YWYiLCJuYW1lIjoiUmVndWxhciIsImVtYWlsIjoicmVnQHRlc3QuY29tIiwicGFwZWwiOiJVc2VyIiwiaWF0IjoxNzY1NDAzNzkxLCJleHAiOjE3NjU0MTgxOTF9.sBLR4xwzzlvxtYE4JFLMmyp3BLha9M92wb5TCU0CjZk
+Creating incident. User: {
+  id: 999,
+  _id: '6939ec8dee38ec5318e1779e',
+  name: 'Manager',
+  email: 'manager@test.com',
+  papel: 'gestorSistemas',
+  iat: 1765403791,
+  exp: 1765418191
+}
+Body: { title: 'Test Incident', category: 'software', priority: 'low' }
+Incident created: new ObjectId('6939ec8fee38ec5318e177cf')
+PATCH /:id called. Body: {}
+Email recebido: manager@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Falha: usuário não encontrado
+Email recebido: reg@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk3LCJfaWQiOiI2OTM5ZWM5MGVlMzhlYzUzMThlMTc3ZTAiLCJuYW1lIjoiUmVndWxhciIsImVtYWlsIjoicmVnQHRlc3QuY29tIiwicGFwZWwiOiJVc2VyIiwiaWF0IjoxNzY1NDAzNzkyLCJleHAiOjE3NjU0MTgxOTJ9.0FWmbvOWGGpydxmdeYhobkDRmZ7aiWgz5yQp03Vk6y0
+Email recebido: manager@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk5LCJfaWQiOiI2OTM5ZWM5MWVlMzhlYzUzMThlMTc3ZTYiLCJuYW1lIjoiTWFuYWdlciIsImVtYWlsIjoibWFuYWdlckB0ZXN0LmNvbSIsInBhcGVsIjoiZ2VzdG9yU2lzdGVtYXMiLCJpYXQiOjE3NjU0MDM3OTMsImV4cCI6MTc2NTQxODE5M30.TeBuRwPNhDzeE9T7VRGnhOpn-m69ye2_uDkz15al610
+Email recebido: manager@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Email recebido: manager@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk5LCJfaWQiOiI2OTM5ZWM5MWVlMzhlYzUzMThlMTc3ZTYiLCJuYW1lIjoiTWFuYWdlciIsImVtYWlsIjoibWFuYWdlckB0ZXN0LmNvbSIsInBhcGVsIjoiZ2VzdG9yU2lzdGVtYXMiLCJpYXQiOjE3NjU0MDM3OTQsImV4cCI6MTc2NTQxODE5NH0.BMV9dV3FX2xbP-gkXvt8poPs7VuZuZerIbsmMWlHTdo
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk5LCJfaWQiOiI2OTM5ZWM5MWVlMzhlYzUzMThlMTc3ZTYiLCJuYW1lIjoiTWFuYWdlciIsImVtYWlsIjoibWFuYWdlckB0ZXN0LmNvbSIsInBhcGVsIjoiZ2VzdG9yU2lzdGVtYXMiLCJpYXQiOjE3NjU0MDM3OTQsImV4cCI6MTc2NTQxODE5NH0.BMV9dV3FX2xbP-gkXvt8poPs7VuZuZerIbsmMWlHTdo
+Email recebido: reg@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Email recebido: manager@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk3LCJfaWQiOiI2OTM5ZWM5MmVlMzhlYzUzMThlMTc3ZjEiLCJuYW1lIjoiUmVndWxhciIsImVtYWlsIjoicmVnQHRlc3QuY29tIiwicGFwZWwiOiJVc2VyIiwiaWF0IjoxNzY1NDAzNzk1LCJleHAiOjE3NjU0MTgxOTV9.Bp_69QqPtC3_IatHFyLawa5US9QpEfZSAyEC_vZ0TRM
+Creating incident. User: {
+  id: 999,
+  _id: '6939ec91ee38ec5318e177e6',
+  name: 'Manager',
+  email: 'manager@test.com',
+  papel: 'gestorSistemas',
+  iat: 1765403793,
+  exp: 1765418193
+}
+Body: { title: 'Test Incident', category: 'software', priority: 'low' }
+Incident created: new ObjectId('6939ec93ee38ec5318e177fb')
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk5LCJfaWQiOiI2OTM5ZWM5MWVlMzhlYzUzMThlMTc3ZTYiLCJuYW1lIjoiTWFuYWdlciIsImVtYWlsIjoibWFuYWdlckB0ZXN0LmNvbSIsInBhcGVsIjoiZ2VzdG9yU2lzdGVtYXMiLCJpYXQiOjE3NjU0MDM3OTUsImV4cCI6MTc2NTQxODE5NX0.tAjWehEk_-Rjn24rf6X4GAuh0rn97w49O3CLIoyvRuE
+PATCH /:id called. Body: { assignedTo: '6939ec92ee38ec5318e177eb' }
+Assignment attempt by: reg@test.com Role: User
+Assigning to: 6939ec92ee38ec5318e177eb
+Blocked: Requester is not gestorSistemas
+Email recebido: reg@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk3LCJfaWQiOiI2OTM5ZWM5MmVlMzhlYzUzMThlMTc3ZjEiLCJuYW1lIjoiUmVndWxhciIsImVtYWlsIjoicmVnQHRlc3QuY29tIiwicGFwZWwiOiJVc2VyIiwiaWF0IjoxNzY1NDAzNzk1LCJleHAiOjE3NjU0MTgxOTV9.Bp_69QqPtC3_IatHFyLawa5US9QpEfZSAyEC_vZ0TRM
+Email recebido: reg@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Creating incident. User: {
+  id: 999,
+  _id: '6939ec91ee38ec5318e177e6',
+  name: 'Manager',
+  email: 'manager@test.com',
+  papel: 'gestorSistemas',
+  iat: 1765403794,
+  exp: 1765418194
+}
+Body: { title: 'Test Incident', category: 'software', priority: 'low' }
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk3LCJfaWQiOiI2OTM5ZWM5MmVlMzhlYzUzMThlMTc3ZjEiLCJuYW1lIjoiUmVndWxhciIsImVtYWlsIjoicmVnQHRlc3QuY29tIiwicGFwZWwiOiJVc2VyIiwiaWF0IjoxNzY1NDAzNzk1LCJleHAiOjE3NjU0MTgxOTV9.Bp_69QqPtC3_IatHFyLawa5US9QpEfZSAyEC_vZ0TRM
+Incident created: new ObjectId('6939ec93ee38ec5318e17808')
+Creating incident. User: {
+  id: 999,
+  _id: '6939ec91ee38ec5318e177e6',
+  name: 'Manager',
+  email: 'manager@test.com',
+  papel: 'gestorSistemas',
+  iat: 1765403794,
+  exp: 1765418194
+}
+Body: { title: 'Test Incident', category: 'software', priority: 'low' }
+PATCH /:id called. Body: {}
+Incident created: new ObjectId('6939ec93ee38ec5318e1780d')
+Email recebido: reg@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+PATCH /:id called. Body: {}
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk3LCJfaWQiOiI2OTM5ZWM5M2VlMzhlYzUzMThlMTc4MGIiLCJuYW1lIjoiUmVndWxhciIsImVtYWlsIjoicmVnQHRlc3QuY29tIiwicGFwZWwiOiJVc2VyIiwiaWF0IjoxNzY1NDAzNzk2LCJleHAiOjE3NjU0MTgxOTZ9.G3NvDjRKZN9zRXSH3KLvfwrORXmy6QZx1no-H-RmQns
+Creating incident. User: {
+  id: 999,
+  _id: '6939ec91ee38ec5318e177e6',
+  name: 'Manager',
+  email: 'manager@test.com',
+  papel: 'gestorSistemas',
+  iat: 1765403795,
+  exp: 1765418195
+}
+Body: { title: 'Test Incident', category: 'software', priority: 'low' }
+Incident created: new ObjectId('6939ec94ee38ec5318e17814')
+PATCH /:id called. Body: {}
+Email recebido: manager@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk5LCJfaWQiOiI2OTM5ZWM5NWVlMzhlYzUzMThlMTc4MjEiLCJuYW1lIjoiTWFuYWdlciIsImVtYWlsIjoibWFuYWdlckB0ZXN0LmNvbSIsInBhcGVsIjoiZ2VzdG9yU2lzdGVtYXMiLCJpYXQiOjE3NjU0MDM3OTcsImV4cCI6MTc2NTQxODE5N30.wTL8qQmtPa-yLpOWNHnviepYmwho_uSWwbz2qweWuMg
+Email recebido: manager@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk5LCJfaWQiOiI2OTM5ZWM5NWVlMzhlYzUzMThlMTc4MjEiLCJuYW1lIjoiTWFuYWdlciIsImVtYWlsIjoibWFuYWdlckB0ZXN0LmNvbSIsInBhcGVsIjoiZ2VzdG9yU2lzdGVtYXMiLCJpYXQiOjE3NjU0MDM3OTgsImV4cCI6MTc2NTQxODE5OH0.-XtHH6IgVKBx0kXG8d26j3dtVX0QObX3HG6YnP1-qP4
+Email recebido: reg@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Email recebido: manager@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk5LCJfaWQiOiI2OTM5ZWM5NWVlMzhlYzUzMThlMTc4MjEiLCJuYW1lIjoiTWFuYWdlciIsImVtYWlsIjoibWFuYWdlckB0ZXN0LmNvbSIsInBhcGVsIjoiZ2VzdG9yU2lzdGVtYXMiLCJpYXQiOjE3NjU0MDM3OTgsImV4cCI6MTc2NTQxODE5OH0.-XtHH6IgVKBx0kXG8d26j3dtVX0QObX3HG6YnP1-qP4
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk3LCJfaWQiOiI2OTM5ZWM5NmVlMzhlYzUzMThlMTc4MjkiLCJuYW1lIjoiUmVndWxhciIsImVtYWlsIjoicmVnQHRlc3QuY29tIiwicGFwZWwiOiJVc2VyIiwiaWF0IjoxNzY1NDAzNzk4LCJleHAiOjE3NjU0MTgxOTh9.qMTV3vmBoxrLx_UhYyFFS64f5b7oKSVF3KdzggyyiJQ
+Creating incident. User: {
+  id: 999,
+  _id: '6939ec95ee38ec5318e17821',
+  name: 'Manager',
+  email: 'manager@test.com',
+  papel: 'gestorSistemas',
+  iat: 1765403797,
+  exp: 1765418197
+}
+Body: { title: 'Test Incident', category: 'software', priority: 'low' }
+Incident created: new ObjectId('6939ec96ee38ec5318e17831')
+PATCH /:id called. Body: { assignedTo: '6939ec95ee38ec5318e17824' }
+Email recebido: reg@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Assignment attempt by: manager@test.com Role: gestorSistemas
+Assigning to: 6939ec95ee38ec5318e17824
+Assignee found: prog@test.com Role: Programador
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk3LCJfaWQiOiI2OTM5ZWM5NmVlMzhlYzUzMThlMTc4MjkiLCJuYW1lIjoiUmVndWxhciIsImVtYWlsIjoicmVnQHRlc3QuY29tIiwicGFwZWwiOiJVc2VyIiwiaWF0IjoxNzY1NDAzNzk5LCJleHAiOjE3NjU0MTgxOTl9.AGiUVaI97uh-soaW6Xf2YGAhoULFjPNcVeGmETRqqwE
+Email recebido: reg@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Creating incident. User: {
+  id: 999,
+  _id: '6939ec95ee38ec5318e17821',
+  name: 'Manager',
+  email: 'manager@test.com',
+  papel: 'gestorSistemas',
+  iat: 1765403798,
+  exp: 1765418198
+}
+Body: { title: 'Test Incident', category: 'software', priority: 'low' }
+Incident created: new ObjectId('6939ec97ee38ec5318e1783e')
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk3LCJfaWQiOiI2OTM5ZWM5NmVlMzhlYzUzMThlMTc4MjkiLCJuYW1lIjoiUmVndWxhciIsImVtYWlsIjoicmVnQHRlc3QuY29tIiwicGFwZWwiOiJVc2VyIiwiaWF0IjoxNzY1NDAzNzk5LCJleHAiOjE3NjU0MTgxOTl9.AGiUVaI97uh-soaW6Xf2YGAhoULFjPNcVeGmETRqqwE
+Creating incident. User: {
+  id: 999,
+  _id: '6939ec95ee38ec5318e17821',
+  name: 'Manager',
+  email: 'manager@test.com',
+  papel: 'gestorSistemas',
+  iat: 1765403798,
+  exp: 1765418198
+}
+Body: { title: 'Test Incident', category: 'software', priority: 'low' }
+PATCH /:id called. Body: {}
+Incident created: new ObjectId('6939ec97ee38ec5318e17841')
+PATCH /:id called. Body: {}
+Email recebido: manager@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Email recebido: manager@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk5LCJfaWQiOiI2OTM5ZWNiMGVlMzhlYzUzMThlMTc4NGYiLCJuYW1lIjoiTWFuYWdlciIsImVtYWlsIjoibWFuYWdlckB0ZXN0LmNvbSIsInBhcGVsIjoiZ2VzdG9yU2lzdGVtYXMiLCJpYXQiOjE3NjU0MDM4MjUsImV4cCI6MTc2NTQxODIyNX0.FiM2m0mE7fHue3Db7vVGgLDLWl2sWpegR3jQ_Uwli8M
+Email recebido: manager@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk5LCJfaWQiOiI2OTM5ZWNiMGVlMzhlYzUzMThlMTc4NGYiLCJuYW1lIjoiTWFuYWdlciIsImVtYWlsIjoibWFuYWdlckB0ZXN0LmNvbSIsInBhcGVsIjoiZ2VzdG9yU2lzdGVtYXMiLCJpYXQiOjE3NjU0MDM4MjUsImV4cCI6MTc2NTQxODIyNX0.FiM2m0mE7fHue3Db7vVGgLDLWl2sWpegR3jQ_Uwli8M
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk5LCJfaWQiOiI2OTM5ZWNiMGVlMzhlYzUzMThlMTc4NGYiLCJuYW1lIjoiTWFuYWdlciIsImVtYWlsIjoibWFuYWdlckB0ZXN0LmNvbSIsInBhcGVsIjoiZ2VzdG9yU2lzdGVtYXMiLCJpYXQiOjE3NjU0MDM4MjUsImV4cCI6MTc2NTQxODIyNX0.FiM2m0mE7fHue3Db7vVGgLDLWl2sWpegR3jQ_Uwli8M
+Email recebido: manager@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk5LCJfaWQiOiI2OTM5ZWNiMGVlMzhlYzUzMThlMTc4NGYiLCJuYW1lIjoiTWFuYWdlciIsImVtYWlsIjoibWFuYWdlckB0ZXN0LmNvbSIsInBhcGVsIjoiZ2VzdG9yU2lzdGVtYXMiLCJpYXQiOjE3NjU0MDM4MjYsImV4cCI6MTc2NTQxODIyNn0.UbMHRAvNB5zpAit5KiM3XLURrkyL5u5SWzuO46xwshs
+Email recebido: reg@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Email recebido: reg@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Email recebido: reg@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk3LCJfaWQiOiI2OTM5ZWNiMmVlMzhlYzUzMThlMTc4NjEiLCJuYW1lIjoiUmVndWxhciIsImVtYWlsIjoicmVnQHRlc3QuY29tIiwicGFwZWwiOiJVc2VyIiwiaWF0IjoxNzY1NDAzODI2LCJleHAiOjE3NjU0MTgyMjZ9.NN0ND0bZBKkI6axWFkV9OJ4CC3PWnm7tJolXMnBzEdE
+Creating incident. User: {
+  id: 999,
+  _id: '6939ecb0ee38ec5318e1784f',
+  name: 'Manager',
+  email: 'manager@test.com',
+  papel: 'gestorSistemas',
+  iat: 1765403825,
+  exp: 1765418225
+}
+Body: { title: 'Test Incident', category: 'software', priority: 'low' }
+Incident created: new ObjectId('6939ecb2ee38ec5318e1786e')
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk3LCJfaWQiOiI2OTM5ZWNiMmVlMzhlYzUzMThlMTc4NjEiLCJuYW1lIjoiUmVndWxhciIsImVtYWlsIjoicmVnQHRlc3QuY29tIiwicGFwZWwiOiJVc2VyIiwiaWF0IjoxNzY1NDAzODI2LCJleHAiOjE3NjU0MTgyMjZ9.NN0ND0bZBKkI6axWFkV9OJ4CC3PWnm7tJolXMnBzEdE
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk3LCJfaWQiOiI2OTM5ZWNiMmVlMzhlYzUzMThlMTc4NjEiLCJuYW1lIjoiUmVndWxhciIsImVtYWlsIjoicmVnQHRlc3QuY29tIiwicGFwZWwiOiJVc2VyIiwiaWF0IjoxNzY1NDAzODI2LCJleHAiOjE3NjU0MTgyMjZ9.NN0ND0bZBKkI6axWFkV9OJ4CC3PWnm7tJolXMnBzEdE
+Email recebido: reg@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Creating incident. User: {
+  id: 999,
+  _id: '6939ecb0ee38ec5318e1784f',
+  name: 'Manager',
+  email: 'manager@test.com',
+  papel: 'gestorSistemas',
+  iat: 1765403825,
+  exp: 1765418225
+}
+Body: { title: 'Test Incident', category: 'software', priority: 'low' }
+Creating incident. User: {
+  id: 999,
+  _id: '6939ecb0ee38ec5318e1784f',
+  name: 'Manager',
+  email: 'manager@test.com',
+  papel: 'gestorSistemas',
+  iat: 1765403825,
+  exp: 1765418225
+}
+Body: { title: 'Test Incident', category: 'software', priority: 'low' }
+PATCH /:id called. Body: { assignedTo: '6939ecb1ee38ec5318e1785a' }
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk3LCJfaWQiOiI2OTM5ZWNiMmVlMzhlYzUzMThlMTc4NjEiLCJuYW1lIjoiUmVndWxhciIsImVtYWlsIjoicmVnQHRlc3QuY29tIiwicGFwZWwiOiJVc2VyIiwiaWF0IjoxNzY1NDAzODI3LCJleHAiOjE3NjU0MTgyMjd9.My2GY_41mOeM27TYhqi6UKVBywILAcB1PGnBu2g6Yrg
+Incident created: new ObjectId('6939ecb2ee38ec5318e17871')
+Incident created: new ObjectId('6939ecb2ee38ec5318e17873')
+Assignment attempt by: manager@test.com Role: gestorSistemas
+Assigning to: 6939ecb1ee38ec5318e1785a
+Creating incident. User: {
+  id: 999,
+  _id: '6939ecb0ee38ec5318e1784f',
+  name: 'Manager',
+  email: 'manager@test.com',
+  papel: 'gestorSistemas',
+  iat: 1765403826,
+  exp: 1765418226
+}
+Body: { title: 'Test Incident', category: 'software', priority: 'low' }
+Assignee found: prog@test.com Role: Programador
+Incident created: new ObjectId('6939ecb3ee38ec5318e17877')
+PATCH /:id called. Body: {}
+PATCH /:id called. Body: {}
+PATCH /:id called. Body: {}
+Email recebido: manager@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Email recebido: manager@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk5LCJfaWQiOiI2OTM5ZWNiNGVlMzhlYzUzMThlMTc4OGMiLCJuYW1lIjoiTWFuYWdlciIsImVtYWlsIjoibWFuYWdlckB0ZXN0LmNvbSIsInBhcGVsIjoiZ2VzdG9yU2lzdGVtYXMiLCJpYXQiOjE3NjU0MDM4MjksImV4cCI6MTc2NTQxODIyOX0.651blq5_fZyG24cexxZpPe5A72JC5QVELVNzTW7vgZs
+Email recebido: manager@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk5LCJfaWQiOiI2OTM5ZWNiNGVlMzhlYzUzMThlMTc4OGMiLCJuYW1lIjoiTWFuYWdlciIsImVtYWlsIjoibWFuYWdlckB0ZXN0LmNvbSIsInBhcGVsIjoiZ2VzdG9yU2lzdGVtYXMiLCJpYXQiOjE3NjU0MDM4MjksImV4cCI6MTc2NTQxODIyOX0.651blq5_fZyG24cexxZpPe5A72JC5QVELVNzTW7vgZs
+Email recebido: manager@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk5LCJfaWQiOiI2OTM5ZWNiNGVlMzhlYzUzMThlMTc4OGMiLCJuYW1lIjoiTWFuYWdlciIsImVtYWlsIjoibWFuYWdlckB0ZXN0LmNvbSIsInBhcGVsIjoiZ2VzdG9yU2lzdGVtYXMiLCJpYXQiOjE3NjU0MDM4MjksImV4cCI6MTc2NTQxODIyOX0.651blq5_fZyG24cexxZpPe5A72JC5QVELVNzTW7vgZs
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk5LCJfaWQiOiI2OTM5ZWNiNGVlMzhlYzUzMThlMTc4OGMiLCJuYW1lIjoiTWFuYWdlciIsImVtYWlsIjoibWFuYWdlckB0ZXN0LmNvbSIsInBhcGVsIjoiZ2VzdG9yU2lzdGVtYXMiLCJpYXQiOjE3NjU0MDM4MzAsImV4cCI6MTc2NTQxODIzMH0.bxuTW7ek89iXrwEi5A_B5Ol-uNVIc1020YwfTACQldE
+Email recebido: reg@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Email recebido: reg@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk3LCJfaWQiOiI2OTM5ZWNiNmVlMzhlYzUzMThlMTc4OWUiLCJuYW1lIjoiUmVndWxhciIsImVtYWlsIjoicmVnQHRlc3QuY29tIiwicGFwZWwiOiJVc2VyIiwiaWF0IjoxNzY1NDAzODMwLCJleHAiOjE3NjU0MTgyMzB9.OhBngtkrxAhV0YBiHvOjc1e2IPO6lAhenVQghXja7Zs
+Email recebido: reg@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Creating incident. User: {
+  id: 999,
+  _id: '6939ecb4ee38ec5318e1788c',
+  name: 'Manager',
+  email: 'manager@test.com',
+  papel: 'gestorSistemas',
+  iat: 1765403829,
+  exp: 1765418229
+}
+Body: { title: 'Test Incident', category: 'software', priority: 'low' }
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk3LCJfaWQiOiI2OTM5ZWNiNmVlMzhlYzUzMThlMTc4OWUiLCJuYW1lIjoiUmVndWxhciIsImVtYWlsIjoicmVnQHRlc3QuY29tIiwicGFwZWwiOiJVc2VyIiwiaWF0IjoxNzY1NDAzODMwLCJleHAiOjE3NjU0MTgyMzB9.OhBngtkrxAhV0YBiHvOjc1e2IPO6lAhenVQghXja7Zs
+Email recebido: reg@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Creating incident. User: {
+  id: 999,
+  _id: '6939ecb4ee38ec5318e1788c',
+  name: 'Manager',
+  email: 'manager@test.com',
+  papel: 'gestorSistemas',
+  iat: 1765403829,
+  exp: 1765418229
+}
+Body: { title: 'Test Incident', category: 'software', priority: 'low' }
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk3LCJfaWQiOiI2OTM5ZWNiNmVlMzhlYzUzMThlMTc4OWUiLCJuYW1lIjoiUmVndWxhciIsImVtYWlsIjoicmVnQHRlc3QuY29tIiwicGFwZWwiOiJVc2VyIiwiaWF0IjoxNzY1NDAzODMwLCJleHAiOjE3NjU0MTgyMzB9.OhBngtkrxAhV0YBiHvOjc1e2IPO6lAhenVQghXja7Zs
+Incident created: new ObjectId('6939ecb6ee38ec5318e178ab')
+Incident created: new ObjectId('6939ecb6ee38ec5318e178ae')
+Creating incident. User: {
+  id: 999,
+  _id: '6939ecb4ee38ec5318e1788c',
+  name: 'Manager',
+  email: 'manager@test.com',
+  papel: 'gestorSistemas',
+  iat: 1765403829,
+  exp: 1765418229
+}
+Body: { title: 'Test Incident', category: 'software', priority: 'low' }
+PATCH /:id called. Body: { assignedTo: '6939ecb6ee38ec5318e1789e' }
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk3LCJfaWQiOiI2OTM5ZWNiNmVlMzhlYzUzMThlMTc4OWUiLCJuYW1lIjoiUmVndWxhciIsImVtYWlsIjoicmVnQHRlc3QuY29tIiwicGFwZWwiOiJVc2VyIiwiaWF0IjoxNzY1NDAzODMwLCJleHAiOjE3NjU0MTgyMzB9.OhBngtkrxAhV0YBiHvOjc1e2IPO6lAhenVQghXja7Zs
+Creating incident. User: {
+  id: 999,
+  _id: '6939ecb4ee38ec5318e1788c',
+  name: 'Manager',
+  email: 'manager@test.com',
+  papel: 'gestorSistemas',
+  iat: 1765403830,
+  exp: 1765418230
+}
+Body: { title: 'Test Incident', category: 'software', priority: 'low' }
+Assignment attempt by: manager@test.com Role: gestorSistemas
+Assigning to: 6939ecb6ee38ec5318e1789e
+Incident created: new ObjectId('6939ecb6ee38ec5318e178b0')
+PATCH /:id called. Body: {}
+Incident created: new ObjectId('6939ecb7ee38ec5318e178b3')
+Assignee found: reg@test.com Role: User
+Blocked: Assignee is not Programador
+PATCH /:id called. Body: {}
+PATCH /:id called. Body: {}
+Email recebido: manager@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Email recebido: manager@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk5LCJfaWQiOiI2OTM5ZWNiOWVlMzhlYzUzMThlMTc4YzgiLCJuYW1lIjoiTWFuYWdlciIsImVtYWlsIjoibWFuYWdlckB0ZXN0LmNvbSIsInBhcGVsIjoiZ2VzdG9yU2lzdGVtYXMiLCJpYXQiOjE3NjU0MDM4MzMsImV4cCI6MTc2NTQxODIzM30.gkzjNyx4sGzNQlDY6y9z3pusJB-OuxPetEqUhqf9Smo
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk5LCJfaWQiOiI2OTM5ZWNiOWVlMzhlYzUzMThlMTc4YzgiLCJuYW1lIjoiTWFuYWdlciIsImVtYWlsIjoibWFuYWdlckB0ZXN0LmNvbSIsInBhcGVsIjoiZ2VzdG9yU2lzdGVtYXMiLCJpYXQiOjE3NjU0MDM4MzMsImV4cCI6MTc2NTQxODIzM30.gkzjNyx4sGzNQlDY6y9z3pusJB-OuxPetEqUhqf9Smo
+Email recebido: manager@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Email recebido: manager@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk5LCJfaWQiOiI2OTM5ZWNiOWVlMzhlYzUzMThlMTc4YzgiLCJuYW1lIjoiTWFuYWdlciIsImVtYWlsIjoibWFuYWdlckB0ZXN0LmNvbSIsInBhcGVsIjoiZ2VzdG9yU2lzdGVtYXMiLCJpYXQiOjE3NjU0MDM4MzQsImV4cCI6MTc2NTQxODIzNH0.PgiywqmOg5nixUojg02MATfA4DZTBKHUVAuCYPwXwL4
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk5LCJfaWQiOiI2OTM5ZWNiOWVlMzhlYzUzMThlMTc4YzgiLCJuYW1lIjoiTWFuYWdlciIsImVtYWlsIjoibWFuYWdlckB0ZXN0LmNvbSIsInBhcGVsIjoiZ2VzdG9yU2lzdGVtYXMiLCJpYXQiOjE3NjU0MDM4MzQsImV4cCI6MTc2NTQxODIzNH0.PgiywqmOg5nixUojg02MATfA4DZTBKHUVAuCYPwXwL4
+Email recebido: reg@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk3LCJfaWQiOiI2OTM5ZWNiYWVlMzhlYzUzMThlMTc4ZDgiLCJuYW1lIjoiUmVndWxhciIsImVtYWlsIjoicmVnQHRlc3QuY29tIiwicGFwZWwiOiJVc2VyIiwiaWF0IjoxNzY1NDAzODM0LCJleHAiOjE3NjU0MTgyMzR9.gqD7-aarO2EQ_k9jICt-riqbqfMBHW532hMJIWO2CSI
+Email recebido: reg@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Creating incident. User: {
+  id: 999,
+  _id: '6939ecb9ee38ec5318e178c8',
+  name: 'Manager',
+  email: 'manager@test.com',
+  papel: 'gestorSistemas',
+  iat: 1765403833,
+  exp: 1765418233
+}
+Body: { title: 'Test Incident', category: 'software', priority: 'low' }
+Incident created: new ObjectId('6939ecbaee38ec5318e178e2')
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk3LCJfaWQiOiI2OTM5ZWNiYWVlMzhlYzUzMThlMTc4ZDgiLCJuYW1lIjoiUmVndWxhciIsImVtYWlsIjoicmVnQHRlc3QuY29tIiwicGFwZWwiOiJVc2VyIiwiaWF0IjoxNzY1NDAzODM0LCJleHAiOjE3NjU0MTgyMzR9.gqD7-aarO2EQ_k9jICt-riqbqfMBHW532hMJIWO2CSI
+Email recebido: reg@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Creating incident. User: {
+  id: 999,
+  _id: '6939ecb9ee38ec5318e178c8',
+  name: 'Manager',
+  email: 'manager@test.com',
+  papel: 'gestorSistemas',
+  iat: 1765403833,
+  exp: 1765418233
+}
+Body: { title: 'Test Incident', category: 'software', priority: 'low' }
+PATCH /:id called. Body: { assignedTo: '6939ecb9ee38ec5318e178d2' }
+Email recebido: reg@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk3LCJfaWQiOiI2OTM5ZWNiYWVlMzhlYzUzMThlMTc4ZDgiLCJuYW1lIjoiUmVndWxhciIsImVtYWlsIjoicmVnQHRlc3QuY29tIiwicGFwZWwiOiJVc2VyIiwiaWF0IjoxNzY1NDAzODM1LCJleHAiOjE3NjU0MTgyMzV9.XZzXwyb7BisP7p0gznUq1V4WcIq71MCE2ZUt1Jv5Smo
+Incident created: new ObjectId('6939ecbbee38ec5318e178e9')
+Assignment attempt by: manager@test.com Role: gestorSistemas
+Assigning to: 6939ecb9ee38ec5318e178d2
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk3LCJfaWQiOiI2OTM5ZWNiYWVlMzhlYzUzMThlMTc4ZDgiLCJuYW1lIjoiUmVndWxhciIsImVtYWlsIjoicmVnQHRlc3QuY29tIiwicGFwZWwiOiJVc2VyIiwiaWF0IjoxNzY1NDAzODM1LCJleHAiOjE3NjU0MTgyMzV9.XZzXwyb7BisP7p0gznUq1V4WcIq71MCE2ZUt1Jv5Smo
+Assignee found: prog@test.com Role: Programador
+Creating incident. User: {
+  id: 999,
+  _id: '6939ecb9ee38ec5318e178c8',
+  name: 'Manager',
+  email: 'manager@test.com',
+  papel: 'gestorSistemas',
+  iat: 1765403834,
+  exp: 1765418234
+}
+Body: { title: 'Test Incident', category: 'software', priority: 'low' }
+PATCH /:id called. Body: {}
+Creating incident. User: {
+  id: 999,
+  _id: '6939ecb9ee38ec5318e178c8',
+  name: 'Manager',
+  email: 'manager@test.com',
+  papel: 'gestorSistemas',
+  iat: 1765403834,
+  exp: 1765418234
+}
+Body: { title: 'Test Incident', category: 'software', priority: 'low' }
+Incident created: new ObjectId('6939ecbbee38ec5318e178ef')
+Incident created: new ObjectId('6939ecbbee38ec5318e178f2')
+PATCH /:id called. Body: {}
+PATCH /:id called. Body: {}
+Email recebido: manager@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk5LCJfaWQiOiI2OTM5ZWNkNGVlMzhlYzUzMThlMTc5MDUiLCJuYW1lIjoiTWFuYWdlciIsImVtYWlsIjoibWFuYWdlckB0ZXN0LmNvbSIsInBhcGVsIjoiZ2VzdG9yU2lzdGVtYXMiLCJpYXQiOjE3NjU0MDM4NjAsImV4cCI6MTc2NTQxODI2MH0.mCTfKhmUiRa-xMP8itF3l3nDg3BHMyYI2qC2tfWmwR4
+Email recebido: manager@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Email recebido: manager@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Email recebido: manager@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk5LCJfaWQiOiI2OTM5ZWNkNGVlMzhlYzUzMThlMTc5MDUiLCJuYW1lIjoiTWFuYWdlciIsImVtYWlsIjoibWFuYWdlckB0ZXN0LmNvbSIsInBhcGVsIjoiZ2VzdG9yU2lzdGVtYXMiLCJpYXQiOjE3NjU0MDM4NjAsImV4cCI6MTc2NTQxODI2MH0.mCTfKhmUiRa-xMP8itF3l3nDg3BHMyYI2qC2tfWmwR4
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk5LCJfaWQiOiI2OTM5ZWNkNGVlMzhlYzUzMThlMTc5MDUiLCJuYW1lIjoiTWFuYWdlciIsImVtYWlsIjoibWFuYWdlckB0ZXN0LmNvbSIsInBhcGVsIjoiZ2VzdG9yU2lzdGVtYXMiLCJpYXQiOjE3NjU0MDM4NjAsImV4cCI6MTc2NTQxODI2MH0.mCTfKhmUiRa-xMP8itF3l3nDg3BHMyYI2qC2tfWmwR4
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk5LCJfaWQiOiI2OTM5ZWNkNGVlMzhlYzUzMThlMTc5MDUiLCJuYW1lIjoiTWFuYWdlciIsImVtYWlsIjoibWFuYWdlckB0ZXN0LmNvbSIsInBhcGVsIjoiZ2VzdG9yU2lzdGVtYXMiLCJpYXQiOjE3NjU0MDM4NjEsImV4cCI6MTc2NTQxODI2MX0.L6ZiX0-Q_AiYo-vsk0oV2rAj29q8PJxtaZKlJD0PBuU
+Email recebido: reg@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Email recebido: reg@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk3LCJfaWQiOiI2OTM5ZWNkNWVlMzhlYzUzMThlMTc5MTkiLCJuYW1lIjoiUmVndWxhciIsImVtYWlsIjoicmVnQHRlc3QuY29tIiwicGFwZWwiOiJVc2VyIiwiaWF0IjoxNzY1NDAzODYxLCJleHAiOjE3NjU0MTgyNjF9.vKYlILN9ezk0OaLg3Up9hAMZAVgVHD0XwWG6DMWgb9k
+Email recebido: reg@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Creating incident. User: {
+  id: 999,
+  _id: '6939ecd4ee38ec5318e17905',
+  name: 'Manager',
+  email: 'manager@test.com',
+  papel: 'gestorSistemas',
+  iat: 1765403860,
+  exp: 1765418260
+}
+Body: { title: 'Test Incident', category: 'software', priority: 'low' }
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk3LCJfaWQiOiI2OTM5ZWNkNWVlMzhlYzUzMThlMTc5MTkiLCJuYW1lIjoiUmVndWxhciIsImVtYWlsIjoicmVnQHRlc3QuY29tIiwicGFwZWwiOiJVc2VyIiwiaWF0IjoxNzY1NDAzODYxLCJleHAiOjE3NjU0MTgyNjF9.vKYlILN9ezk0OaLg3Up9hAMZAVgVHD0XwWG6DMWgb9k
+Incident created: new ObjectId('6939ecd5ee38ec5318e17924')
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk3LCJfaWQiOiI2OTM5ZWNkNWVlMzhlYzUzMThlMTc5MTkiLCJuYW1lIjoiUmVndWxhciIsImVtYWlsIjoicmVnQHRlc3QuY29tIiwicGFwZWwiOiJVc2VyIiwiaWF0IjoxNzY1NDAzODYyLCJleHAiOjE3NjU0MTgyNjJ9.7b5kRXV3h89132ijmfSUtClinZKthMWllT-poOJ33I4
+Email recebido: reg@test.com
+Senha recebida: 123
+JWT_SECRET: minha_chave_secreta
+Creating incident. User: {
+  id: 999,
+  _id: '6939ecd4ee38ec5318e17905',
+  name: 'Manager',
+  email: 'manager@test.com',
+  papel: 'gestorSistemas',
+  iat: 1765403860,
+  exp: 1765418260
+}
+Body: { title: 'Test Incident', category: 'software', priority: 'low' }
+Creating incident. User: {
+  id: 999,
+  _id: '6939ecd4ee38ec5318e17905',
+  name: 'Manager',
+  email: 'manager@test.com',
+  papel: 'gestorSistemas',
+  iat: 1765403860,
+  exp: 1765418260
+}
+Body: { title: 'Test Incident', category: 'software', priority: 'low' }
+PATCH /:id called. Body: { assignedTo: '6939ecd4ee38ec5318e17911' }
+Resultado comparação senha: true
+Login bem-sucedido, token criado: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTk3LCJfaWQiOiI2OTM5ZWNkNWVlMzhlYzUzMThlMTc5MTkiLCJuYW1lIjoiUmVndWxhciIsImVtYWlsIjoicmVnQHRlc3QuY29tIiwicGFwZWwiOiJVc2VyIiwiaWF0IjoxNzY1NDAzODYyLCJleHAiOjE3NjU0MTgyNjJ9.7b5kRXV3h89132ijmfSUtClinZKthMWllT-poOJ33I4
+Incident created: new ObjectId('6939ecd6ee38ec5318e17927')
+Incident created: new ObjectId('6939ecd6ee38ec5318e17929')
+Assignment attempt by: manager@test.com Role: gestorSistemas
+Assigning to: 6939ecd4ee38ec5318e17911
+Creating incident. User: {
+  id: 999,
+  _id: '6939ecd4ee38ec5318e17905',
+  name: 'Manager',
+  email: 'manager@test.com',
+  papel: 'gestorSistemas',
+  iat: 1765403861,
+  exp: 1765418261
+}
+Body: { title: 'Test Incident', category: 'software', priority: 'low' }
+Assignee found: prog@test.com Role: Programador
+Incident created: new ObjectId('6939ecd6ee38ec5318e1792d')
+PATCH /:id called. Body: {}
+PATCH /:id called. Body: {}
+PATCH /:id called. Body: {}
+PATCH /:id called. Body: { assignedTo: '6939ecd5ee38ec5318e17919' }
+Assignment attempt by: manager@test.com Role: gestorSistemas
+Assigning to: 6939ecd5ee38ec5318e17919
+Assignee found: reg@test.com Role: User
+Blocked: Assignee is not Programador
+PATCH /:id called. Body: { assignedTo: '6939ecd4ee38ec5318e17911' }
+Assignment attempt by: reg@test.com Role: User
+Assigning to: 6939ecd4ee38ec5318e17911
+Blocked: Requester is not gestorSistemas

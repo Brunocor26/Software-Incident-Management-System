@@ -61,7 +61,13 @@ function createRow(inc) {
           <td data-label="Status">
             <span class="status status-${statusClass(inc.status)}">${formatStatus(inc.status)}</span>
           </td>
+          <td data-label="Assigned To">
+            ${inc.assignedTo ? `<span class="badge badge-secondary" style="background: #e0f2fe; color: #0369a1;">${inc.assignedTo.name}</span>` : '-'}
+          </td>
           <td class="action-cell" data-label="Actions">
+            <button class="btn btn-ghost btn-icon assign-btn" data-id="${inc._id}" aria-label="Assign incident ${inc._id}">
+               <span>Assign</span>
+            </button>
             <a class="btn btn-ghost btn-icon"
                href="view_incident.html?id=${inc._id}"
                aria-label="Edit incident ${inc._id}">
@@ -142,6 +148,83 @@ async function initIncidents() {
       renderTable(filtered);
     });
   }
+
+    // --- ASSIGNMENT ---
+    const assignModal = document.getElementById('assign-modal');
+    const closeModal = document.querySelector('.close-modal');
+    const assignForm = document.getElementById('assign-form');
+    const assignSelect = document.getElementById('assign-user');
+    const assignInputId = document.getElementById('assign-incident-id');
+
+    // Fetch users for dropdown
+    try {
+        const res = await fetch('http://localhost:3000/users');
+        if (res.ok) {
+            const users = await res.json();
+            users.forEach(u => {
+                const opt = document.createElement('option');
+                opt.value = u._id;
+                opt.textContent = u.name;
+                assignSelect.appendChild(opt);
+            });
+        }
+    } catch (e) {
+        console.error("Failed to load users", e);
+    }
+
+    // Open modal
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('.assign-btn')) {
+            const btn = e.target.closest('.assign-btn');
+            const id = btn.dataset.id;
+            assignInputId.value = id;
+            assignModal.classList.remove('hidden');
+        }
+    });
+
+    // Close modal
+    if (closeModal) {
+        closeModal.addEventListener('click', () => {
+            assignModal.classList.add('hidden');
+        });
+    }
+
+    window.addEventListener('click', (e) => {
+        if (e.target === assignModal) {
+            assignModal.classList.add('hidden');
+        }
+    });
+
+    // Submit assignment
+    if (assignForm) {
+        assignForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const incidentId = assignInputId.value;
+            const userId = assignSelect.value;
+            const token = localStorage.getItem('token');
+
+            try {
+                const res = await fetch(`http://localhost:3000/api/incidents/${incidentId}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ assignedTo: userId })
+                });
+
+                if (res.ok) {
+                    assignModal.classList.add('hidden');
+                    initIncidents(); // Refresh table
+                } else {
+                    alert('Failed to assign incident');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Error assigning incident');
+            }
+        });
+    }
 }
 
 document.addEventListener('DOMContentLoaded', initIncidents);
