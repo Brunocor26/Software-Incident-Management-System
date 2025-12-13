@@ -19,6 +19,7 @@ const IncidentSchema = new mongoose.Schema(
         assignedTo: { type: mongoose.Types.ObjectId, ref: "User", default: null, index: true },
         createdBy: { type: mongoose.Types.ObjectId, ref: "User", required: true, index: true },
         tags: [{ type: String }],
+        gitBranch: { type: String, default: null },
         attachments: [AttachmentSchema],
         timeline: [{
             at: { type: Date, default: Date.now },

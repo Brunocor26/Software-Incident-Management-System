@@ -69,7 +69,7 @@ async function loadIncident() {
       dropZone.style.pointerEvents = 'none';
       dropZone.style.opacity = '0.5';
       fileInput.disabled = true;
-      
+
       // Show message
       const msg = document.createElement('div');
       msg.style.cssText = 'background-color: #ffe6e6; color: #cc0000; padding: 10px; border-radius: 4px; margin-bottom: 10px; border-left: 4px solid #cc0000;';
@@ -98,6 +98,9 @@ async function loadIncident() {
         aiContent.textContent = "Error loading suggestion.";
       }
     }
+
+    // Init Git Sidebar with data
+    initGitSidebar(inc);
 
   } catch (err) {
     console.error(err);
@@ -244,4 +247,144 @@ function renderFiles() {
       }
     })
   );
+}
+
+// ---------- GIT INTEGRATION ----------
+const btnCreateBranch = $('#btn-create-branch');
+if (btnCreateBranch) {
+  btnCreateBranch.addEventListener('click', async () => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
+    // Auto-generate branch name: feature/INC-{id}-{slug}
+    // Slug: title to lower, remove special chars, replace space with -
+    const slug = titleInp.value
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .trim()
+      .replace(/\s+/g, '-')
+      .substring(0, 30); // limit length
+
+    const branchName = prompt("Branch Name:", `feature/INC-${id}-${slug}`);
+    if (!branchName) return;
+
+    try {
+      btnCreateBranch.disabled = true;
+      btnCreateBranch.textContent = "Creating...";
+
+      const res = await fetch('http://localhost:3000/api/git/create-branch', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ incidentId: id, branchName })
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || 'Failed to create branch');
+      }
+
+      const data = await res.json();
+      alert(data.message);
+      location.reload();
+
+    } catch (e) {
+      console.error(e);
+      alert('Error: ' + e.message);
+      btnCreateBranch.disabled = false;
+    }
+  });
+}
+
+const inpBranchName = $('#git-branch-name-input');
+const inpCheckout = $('#git-checkout-cmd');
+const inpCommit = $('#git-commit-cmd');
+const btnLinkBranch = $('#btn-link-branch');
+const msgLinked = $('#msg-linked');
+
+function copyToClipboard(text, btn) {
+  navigator.clipboard.writeText(text).then(() => {
+    const original = btn.innerHTML;
+    btn.innerHTML = '✅';
+    setTimeout(() => btn.innerHTML = original, 2000);
+  });
+}
+
+if (inpBranchName && $('#btn-copy-name')) $('#btn-copy-name').onclick = () => copyToClipboard(inpBranchName.value, $('#btn-copy-name'));
+if (inpCheckout && $('#btn-copy-checkout')) $('#btn-copy-checkout').onclick = () => copyToClipboard(inpCheckout.value, $('#btn-copy-checkout'));
+if (inpCommit && $('#btn-copy-commit')) $('#btn-copy-commit').onclick = () => copyToClipboard(inpCommit.value, $('#btn-copy-commit'));
+
+function updateGitCommands() {
+  const branch = inpBranchName.value.trim();
+  inpCheckout.value = `git checkout -b ${branch}`;
+  const incId = $('#incident-id').textContent || id;
+  inpCommit.value = `git commit -m "INC-${incId} ${titleInp.value.substring(0, 50)}..."`;
+}
+if (inpBranchName) inpBranchName.addEventListener('input', updateGitCommands);
+
+function initGitSidebar(incident) {
+  if (!inpBranchName) return;
+
+  if (incident.gitBranch) {
+    inpBranchName.value = incident.gitBranch;
+    inpBranchName.readOnly = true;
+    inpBranchName.style.background = '#f3f4f6';
+    inpBranchName.style.color = '#6b7280';
+
+    if (btnLinkBranch) btnLinkBranch.style.display = 'none';
+    if (msgLinked) msgLinked.style.display = 'block';
+  } else {
+    const slug = incident.title
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .trim()
+      .replace(/\s+/g, '-')
+      .substring(0, 40);
+    inpBranchName.value = `feature/INC-${incident._id}-${slug}`;
+
+    if (btnLinkBranch) btnLinkBranch.style.display = 'block';
+    if (msgLinked) msgLinked.style.display = 'none';
+  }
+  updateGitCommands();
+}
+
+if (btnLinkBranch) {
+  btnLinkBranch.addEventListener('click', async () => {
+    const token = localStorage.getItem('token');
+    const branchName = inpBranchName.value.trim();
+    if (!branchName || !token) return;
+
+    try {
+      btnLinkBranch.disabled = true;
+      btnLinkBranch.textContent = "Linking...";
+
+      const res = await fetch('http://localhost:3000/api/git/create-branch', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ incidentId: id, branchName })
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || 'Failed');
+      }
+
+      inpBranchName.readOnly = true;
+      inpBranchName.style.background = '#f3f4f6';
+      inpBranchName.style.color = '#6b7280';
+      btnLinkBranch.style.display = 'none';
+      msgLinked.style.display = 'block';
+
+    } catch (e) {
+      console.error(e);
+      alert('Error: ' + e.message);
+      btnLinkBranch.disabled = false;
+      btnLinkBranch.textContent = "Link Branch Only";
+    }
+  });
 }

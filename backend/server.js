@@ -29,6 +29,7 @@ const userRoutes = require('./routes/userRoutes');
 // Usar rotas
 app.use('/login', loginRoutes);
 app.use('/api/incidents', incidentRoutes);
+app.use('/api/git', require('./routes/gitRoutes'));
 app.use('/users', userRoutes);
 
 app.get('/protected', authenticateToken, (req, res) => {
