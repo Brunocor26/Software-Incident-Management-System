@@ -6,7 +6,8 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.19.3",
-    "multer": "^2.0.2"
+    "multer": "^2.0.2",
+    "simple-git": "^3.30.0"
   },
   "scripts": {
     "test:e2e": "playwright test"
