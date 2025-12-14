@@ -2,6 +2,7 @@ const { Router } = require("express");
 const { Incident } = require("../models/incidentModel");
 const User = require("../models/userModel");
 const PDFDocument = require("pdfkit");
+const notificationService = require("../services/notificationService");
 
 const authenticateToken = require("../middleware/authMiddleware");
 
@@ -114,12 +115,28 @@ r.post("/", authenticateToken, async (req, res) => {
             tags: b.tags ?? []
         });
         console.log("Incident created:", doc._id);
+
+        // 🔔 NOTIFICAÇÕES (RF5, RF6)
+        try {
+            const users = await notificationService.getRelevantUsers(doc);
+            for (const u of users) {
+                if (!notificationService.alreadySent(u._id, doc._id, "created")) {
+                    notificationService.queueNotification(u, doc, "Novo incidente");
+                }
+            }
+        } catch (err) {
+            console.error("Notification error:", err);
+        }
+
         res.status(201).json(doc);
     } catch (e) {
         console.error("Error creating incident:", e);
         res.status(400).json({ error: e.message });
     }
 });
+
+
+
 
 /* list + filtros + paginação */
 r.get("/", async (req, res) => {
@@ -261,12 +278,12 @@ r.patch("/:id/status", async (req, res) => {
     try {
         const doc = await Incident.findById(req.params.id);
         if (!doc) return res.status(404).json({ error: "Not found" });
-        
+
         // Prevent modification if incident is already closed
         if (doc.status === "closed") {
             return res.status(400).json({ error: "Não é possível modificar um incidente fechado" });
         }
-        
+
         const status = norm.status(req.body.status);
         const updates = { status };
         if (status === "closed") updates["sla.resolvedAt"] = new Date();
@@ -286,30 +303,32 @@ r.patch("/:id/status", async (req, res) => {
 /* patch genérico (incluindo status) */
 r.patch("/:id", authenticateToken, async (req, res) => {
     try {
-        // Check if incident is closed
+        // Check if incident exists
         const current = await Incident.findById(req.params.id);
         if (!current) return res.status(404).json({ error: "Not found" });
-        
+
+        const previousAssignedTo = current.assignedTo
+            ? String(current.assignedTo)
+            : null;
+
         if (current.status === "closed") {
             return res.status(400).json({ error: "Não é possível modificar um incidente fechado" });
         }
-        
+
         const allowed = ["title", "description", "category", "priority", "assignedTo", "tags", "status"];
         const body = Object.fromEntries(
             Object.entries(req.body).filter(([k]) => allowed.includes(k))
         );
-        if (body.category) body.category = norm.category(body.category);
+
         if (body.category) body.category = norm.category(body.category);
         if (body.priority) body.priority = norm.priority(body.priority);
 
         // Role check for assignment
         if (body.assignedTo) {
-            // 1. Only "gestorSistemas" can assign
             if (req.user.papel !== "gestorSistemas") {
                 return res.status(403).json({ error: "Apenas 'gestorSistemas' pode atribuir incidentes." });
             }
 
-            // 2. Can only assign to "Programador"
             const assignee = await User.findById(body.assignedTo);
             if (!assignee) {
                 return res.status(400).json({ error: "Usuário atribuído não encontrado." });
@@ -324,9 +343,10 @@ r.patch("/:id", authenticateToken, async (req, res) => {
             body.status = norm.status(body.status);
             if (body.status === "closed") body["sla.resolvedAt"] = new Date();
 
-            // Check if status actually changed (optional optimization, but good for timeline)
             if (current.status !== body.status) {
-                pushTimeline = { $push: { timeline: { at: new Date(), action: "status_change", note: body.status } } };
+                pushTimeline = {
+                    $push: { timeline: { at: new Date(), action: "status_change", note: body.status } }
+                };
             }
         }
 
@@ -335,12 +355,49 @@ r.patch("/:id", authenticateToken, async (req, res) => {
             { ...body, ...pushTimeline },
             { new: true, runValidators: true }
         );
-        if (!doc) return res.status(404).json({ error: "Not found" });
+
+        // 🔔 NOTIFICAÇÃO DE ATRIBUIÇÃO (RF5)
+        console.log(`Checking assignment notification: BodyAssignedTo=${body.assignedTo}, Previous=${previousAssignedTo}`);
+        if (
+            body.assignedTo &&
+            String(body.assignedTo) !== previousAssignedTo
+        ) {
+            console.log("Assignment changed. Fetching user...");
+            const assignedUser = await User.findById(body.assignedTo);
+            if (assignedUser) {
+                console.log(`User found: ${assignedUser.email}. Queueing notification...`);
+                notificationService.queueNotification(
+                    assignedUser,
+                    doc,
+                    "Incidente atribuído a si"
+                );
+            } else {
+                console.log("Assigned user NOT found.");
+            }
+        } else {
+            console.log("Assignment logic skipped (no change or no assignee).");
+        }
+
+        // 🔔 NOTIFICAÇÕES DE UPDATE (RF5, RF6, RF15)
+        if (body.status || body.priority) {
+            const users = await notificationService.getRelevantUsers(doc);
+            for (const u of users) {
+                if (!notificationService.alreadySent(u._id, doc._id, "update")) {
+                    notificationService.queueNotification(
+                        u,
+                        doc,
+                        "Atualização de incidente"
+                    );
+                }
+            }
+        }
+
         res.json(doc);
     } catch (e) {
         res.status(400).json({ error: e.message });
     }
 });
+
 
 /* attachments upload */
 const multer = require("multer");
