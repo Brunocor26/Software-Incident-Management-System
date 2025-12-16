@@ -33,6 +33,10 @@
       "dest": "/backend/server.js"
     },
     {
+      "src": "/users",
+      "dest": "/backend/server.js"
+    },
+    {
       "src": "/users/(.*)",
       "dest": "/backend/server.js"
     },
