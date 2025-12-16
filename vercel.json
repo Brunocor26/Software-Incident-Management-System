@@ -21,6 +21,14 @@
       "dest": "/backend/server.js"
     },
     {
+      "src": "/protected",
+      "dest": "/backend/server.js"
+    },
+    {
+      "src": "/health",
+      "dest": "/backend/server.js"
+    },
+    {
       "src": "/api/(.*)",
       "dest": "/backend/server.js"
     },
