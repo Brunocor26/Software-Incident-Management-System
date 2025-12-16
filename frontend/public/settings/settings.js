@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchUsers() {
         try {
-            const response = await fetch('http://localhost:3000/users');
+            const response = await fetch('/users');
             if (!response.ok) throw new Error('Failed to fetch users');
             
             const users = await response.json();

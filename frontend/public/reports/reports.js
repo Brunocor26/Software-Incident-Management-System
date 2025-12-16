@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const params = new URLSearchParams(new FormData(filterForm));
         
         try {
-            const response = await fetch(`http://localhost:3000/api/incidents?${params.toString()}`);
+            const response = await fetch(`/api/incidents?${params.toString()}`);
             if (!response.ok) throw new Error('Failed to fetch reports');
             
             const data = await response.json();
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const params = new URLSearchParams(new FormData(filterForm));
         
         try {
-            const response = await fetch(`http://localhost:3000/api/incidents/report/pdf?${params.toString()}`);
+            const response = await fetch(`/api/incidents/report/pdf?${params.toString()}`);
             if (!response.ok) throw new Error('Failed to generate PDF');
             
             const blob = await response.blob();

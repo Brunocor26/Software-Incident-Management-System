@@ -28,7 +28,7 @@ async function loadIncident() {
   }
 
   try {
-    const res = await fetch(`http://localhost:3000/api/incidents/${id}`, {
+    const res = await fetch(`/api/incidents/${id}`, {
       headers: {
         'Authorization': `Bearer ${token}`
       }
@@ -84,7 +84,7 @@ async function loadIncident() {
       aiContainer.style.display = 'block';
 
       try {
-        const aiRes = await fetch(`http://localhost:3000/api/incidents/${id}/ai-suggestion`, {
+        const aiRes = await fetch(`/api/incidents/${id}/ai-suggestion`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         if (aiRes.ok) {
@@ -135,7 +135,7 @@ form.addEventListener('submit', async e => {
     };
 
     // 1. Update incident fields
-    const res = await fetch(`http://localhost:3000/api/incidents/${id}`, {
+    const res = await fetch(`/api/incidents/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -155,7 +155,7 @@ form.addEventListener('submit', async e => {
       const formData = new FormData();
       newFiles.forEach(a => formData.append('files', a.file));
 
-      const resUpload = await fetch(`http://localhost:3000/api/incidents/${id}/attachments`, {
+      const resUpload = await fetch(`/api/incidents/${id}/attachments`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -203,7 +203,7 @@ function renderFiles() {
   fileList.innerHTML = attachments.map((f, i) => {
     const isExisting = !f.file; // If no file object, it's from DB
     const viewLink = isExisting
-      ? `<a href="http://localhost:3000${f.url}" target="_blank" class="view-link">View</a>`
+      ? `<a href="${f.url}" target="_blank" class="view-link">View</a>`
       : '<span class="new-badge">New</span>';
 
     return `
@@ -231,7 +231,7 @@ function renderFiles() {
 
         try {
           const token = localStorage.getItem('token');
-          const res = await fetch(`http://localhost:3000/api/incidents/${id}/attachments/${file.name}`, {
+          const res = await fetch(`/api/incidents/${id}/attachments/${file.name}`, {
             method: 'DELETE',
             headers: { 'Authorization': `Bearer ${token}` }
           });
@@ -272,7 +272,7 @@ if (btnCreateBranch) {
       btnCreateBranch.disabled = true;
       btnCreateBranch.textContent = "Creating...";
 
-      const res = await fetch('http://localhost:3000/api/git/create-branch', {
+      const res = await fetch('/api/git/create-branch', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -360,7 +360,7 @@ if (btnLinkBranch) {
       btnLinkBranch.disabled = true;
       btnLinkBranch.textContent = "Linking...";
 
-      const res = await fetch('http://localhost:3000/api/git/create-branch', {
+      const res = await fetch('/api/git/create-branch', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -12,7 +12,7 @@ async function verifyToken() {
   }
 
   try {
-    const res = await fetch("http://localhost:3000/protected", { // rota protegida no backend
+    const res = await fetch("/protected", { // rota protegida no backend
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -43,7 +43,7 @@ async function fetchDashboardData() {
       return;
     }
 
-    const response = await fetch("http://localhost:3000/api/incidents/summary", {
+    const response = await fetch("/api/incidents/summary", {
       headers: {
         "Authorization": `Bearer ${token}`
       }

@@ -26,7 +26,7 @@ form.addEventListener('submit', e => {
   }
 
   // send to API
-  fetch('http://localhost:3000/api/incidents', {
+  fetch('/api/incidents', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
