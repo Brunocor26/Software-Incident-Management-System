@@ -41,4 +41,8 @@ app.get('/health', (req, res) => {
 });
 // Iniciar servidor
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`🌍 Servidor a correr na porta ${PORT}`));
+if (require.main === module) {
+  app.listen(PORT, () => console.log(`Servidor a correr na porta ${PORT}`));
+}
+
+module.exports = app;

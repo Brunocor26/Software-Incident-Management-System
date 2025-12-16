@@ -21,6 +21,5 @@
     "pdfkit": "^0.17.2",
     "simple-git": "^3.30.0",
     "nodemailer": "^7.0.11"
-   
   }
 }

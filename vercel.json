@@ -1,0 +1,53 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "backend/server.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "frontend/public/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/login",
+      "methods": ["POST"],
+      "dest": "/backend/server.js"
+    },
+    {
+      "src": "/login",
+      "methods": ["GET"],
+      "dest": "/frontend/public/login/login.html"
+    },
+    {
+      "src": "/dashboard",
+      "dest": "/frontend/public/Dashboard/dashboard.html"
+    },
+    {
+      "src": "/incidents",
+      "dest": "/frontend/public/incidents/incidents.html"
+    },
+    {
+      "src": "/settings",
+      "dest": "/frontend/public/settings/settings.html"
+    },
+    {
+      "src": "/reports",
+      "dest": "/frontend/public/reports/reports.html"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/backend/server.js"
+    },
+    {
+      "src": "/users(.*)",
+      "dest": "/backend/server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/frontend/public/$1"
+    }
+  ]
+}
