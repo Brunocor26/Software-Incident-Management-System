@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 
 const AttachmentSchema = new mongoose.Schema({
     filename: { type: String, required: true },
-    url: { type: String, required: true }, // ex.: /uploads/<ficheiro>
+    url: { type: String }, // Stores Data URI
+    base64: { type: String }, // Stores raw base64 string
     mimeType: { type: String },
     size: { type: Number },
     uploadedAt: { type: Date, default: Date.now },

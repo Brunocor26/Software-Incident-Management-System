@@ -356,7 +356,7 @@ r.patch("/:id", authenticateToken, async (req, res) => {
             { new: true, runValidators: true }
         );
 
-        // 🔔 NOTIFICAÇÃO DE ATRIBUIÇÃO (RF5)
+        //  NOTIFICAÇÃO DE ATRIBUIÇÃO (RF5)
         console.log(`Checking assignment notification: BodyAssignedTo=${body.assignedTo}, Previous=${previousAssignedTo}`);
         if (
             body.assignedTo &&
@@ -378,7 +378,7 @@ r.patch("/:id", authenticateToken, async (req, res) => {
             console.log("Assignment logic skipped (no change or no assignee).");
         }
 
-        // 🔔 NOTIFICAÇÕES DE UPDATE (RF5, RF6, RF15)
+        // NOTIFICAÇÕES DE UPDATE (RF5, RF6, RF15)
         if (body.status || body.priority) {
             const users = await notificationService.getRelevantUsers(doc);
             for (const u of users) {
@@ -404,21 +404,8 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        const dir = path.join(__dirname, "../uploads");
-        if (!fs.existsSync(dir)) {
-            fs.mkdirSync(dir, { recursive: true });
-        }
-        cb(null, dir);
-    },
-    filename: function (req, file, cb) {
-        const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-        cb(null, uniqueSuffix + "-" + file.originalname);
-    }
-});
-
-const upload = multer({ storage: storage });
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage, limits: { fileSize: 5 * 1024 * 1024 } }); // 5MB limit
 
 r.post("/:id/attachments", upload.array("files"), async (req, res) => {
     try {
@@ -426,12 +413,17 @@ r.post("/:id/attachments", upload.array("files"), async (req, res) => {
             return res.status(400).json({ error: "No files uploaded" });
         }
 
-        const attachments = req.files.map(f => ({
-            filename: f.originalname,
-            url: `/uploads/${f.filename}`,
-            mimeType: f.mimetype,
-            size: f.size
-        }));
+        const attachments = req.files.map(f => {
+            const b64 = f.buffer.toString("base64");
+            const dataURI = `data:${f.mimetype};base64,${b64}`;
+            return {
+                filename: f.originalname,
+                url: dataURI,
+                base64: b64,
+                mimeType: f.mimetype,
+                size: f.size
+            };
+        });
 
         const doc = await Incident.findByIdAndUpdate(
             req.params.id,
@@ -460,15 +452,11 @@ r.delete("/:id/attachments/:filename", async (req, res) => {
 
         if (!doc) return res.status(404).json({ error: "Incident not found" });
 
-        // 2. Remove from filesystem
-        // Note: In a real app, we might want to store the full path or ID to be safer, 
-        // but here we rely on the filename being unique enough (it has a timestamp prefix).
-        // Also, we should check if the file is actually used by other incidents if we were deduplicating,
-        // but here files are unique per upload.
-        const filePath = path.join(__dirname, "../uploads", filename);
-        if (fs.existsSync(filePath)) {
-            fs.unlinkSync(filePath);
-        }
+        // 2. Remove from filesystem - SKIPPED (Base64 storage)
+        // const filePath = path.join(__dirname, "../uploads", filename);
+        // if (fs.existsSync(filePath)) {
+        //     fs.unlinkSync(filePath);
+        // }
 
         res.json(doc);
     } catch (e) {
