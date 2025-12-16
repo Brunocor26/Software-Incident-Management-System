@@ -12,6 +12,11 @@
   ],
   "routes": [
     {
+      "src": "/",
+      "status": 308,
+      "headers": { "Location": "/login/login.html" }
+    },
+    {
       "src": "/login",
       "dest": "/backend/server.js"
     },
