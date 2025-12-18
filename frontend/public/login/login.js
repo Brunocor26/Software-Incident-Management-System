@@ -1,3 +1,7 @@
+const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+    ? 'http://127.0.0.1:3000' 
+    : '';
+
 const form = document.getElementById('login-form');
 const msg = document.getElementById('message');
 
@@ -14,13 +18,20 @@ form.addEventListener('submit', async (e) => {
     }
 
     try {
-        const response = await fetch('/login', {
+        const response = await fetch(`${API_BASE}/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })
         });
 
-        const data = await response.json();
+        const contentType = response.headers.get("content-type");
+        let data;
+        if (contentType && contentType.indexOf("application/json") !== -1) {
+            data = await response.json();
+        } else {
+            const text = await response.text();
+            throw new Error(`Unexpected response format: ${text.substring(0, 100)}`);
+        }
 
         if (response.ok) {
             msg.textContent = 'Autenticado!';

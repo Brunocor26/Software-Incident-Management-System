@@ -1,3 +1,7 @@
+const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+    ? 'http://127.0.0.1:3000' 
+    : '';
+
 document.addEventListener('DOMContentLoaded', () => {
     const teamBody = document.getElementById('team-members-body');
 
@@ -5,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchUsers() {
         try {
-            const response = await fetch('/users');
+            const response = await fetch(`${API_BASE}/users`);
             if (!response.ok) throw new Error('Failed to fetch users');
             
             const users = await response.json();

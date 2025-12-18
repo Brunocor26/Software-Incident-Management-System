@@ -1,3 +1,7 @@
+const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+  ? 'http://127.0.0.1:3000' 
+  : '';
+
 // ---------- DATA ----------
 async function getIncidents() {
   const token = localStorage.getItem('token');
@@ -7,7 +11,7 @@ async function getIncidents() {
   }
 
   try {
-    const res = await fetch('/api/incidents?limit=100', {
+    const res = await fetch(`${API_BASE}/api/incidents?limit=100`, {
       headers: {
         'Authorization': `Bearer ${token}`
       }
@@ -184,7 +188,7 @@ async function init() {
 
     // Fetch users for dropdown
     try {
-        const res = await fetch('/users?role=Programador');
+        const res = await fetch(`${API_BASE}/users?role=Programador`);
         if (res.ok) {
             const users = await res.json();
             assignSelect.innerHTML = '<option value="">Select a user...</option>'; // Clear existing
@@ -243,7 +247,7 @@ async function init() {
             }
 
             try {
-                const res = await fetch(`/api/incidents/${incidentId}`, {
+                const res = await fetch(`${API_BASE}/api/incidents/${incidentId}`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json',

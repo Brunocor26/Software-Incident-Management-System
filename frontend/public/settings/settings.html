@@ -26,54 +26,6 @@
 
     <section class="settings-container">
       <div class="settings-section">
-        <h2>General Settings</h2>
-        <form class="settings-form">
-          <div class="form-group">
-            <label for="system-name">System Name</label>
-            <input type="text" id="system-name" placeholder="Software Incident Management System" value="Software Incident Management System">
-          </div>
-
-          <div class="form-group">
-            <label for="organization">Organization</label>
-            <input type="text" id="organization" placeholder="Enter organization name" value="">
-          </div>
-
-          <div class="form-group">
-            <label for="email">Email Notifications</label>
-            <input type="email" id="email" placeholder="admin@example.com" value="">
-          </div>
-        </form>
-      </div>
-
-      <div class="settings-section">
-        <h2>System Settings</h2>
-        <form class="settings-form">
-          <div class="form-group">
-            <label for="theme">Theme</label>
-            <select id="theme">
-              <option value="light">Light</option>
-              <option value="dark">Dark</option>
-              <option value="auto">Auto</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="language">Language</label>
-            <select id="language">
-              <option value="pt">Português</option>
-              <option value="en">English</option>
-              <option value="es">Español</option>
-            </select>
-          </div>
-
-          <div class="form-group checkbox">
-            <input type="checkbox" id="notifications" checked>
-            <label for="notifications">Enable Notifications</label>
-          </div>
-        </form>
-      </div>
-
-      <div class="settings-section">
         <h2>Team Members</h2>
         <table class="incidents-table">
           <thead>
@@ -87,31 +39,6 @@
             <!-- Users will be populated here -->
           </tbody>
         </table>
-      </div>
-
-      <div class="settings-section">
-        <h2>Security Settings</h2>
-        <form class="settings-form">
-          <div class="form-group">
-            <label for="password">Change Password</label>
-            <input type="password" id="password" placeholder="Enter new password">
-          </div>
-
-          <div class="form-group">
-            <label for="password-confirm">Confirm Password</label>
-            <input type="password" id="password-confirm" placeholder="Confirm password">
-          </div>
-
-          <div class="form-group checkbox">
-            <input type="checkbox" id="two-factor">
-            <label for="two-factor">Enable Two-Factor Authentication</label>
-          </div>
-        </form>
-      </div>
-
-      <div class="settings-actions">
-        <button class="btn btn-primary">Save Settings</button>
-        <button class="btn btn-secondary">Cancel</button>
       </div>
     </section>
   </main>

@@ -1,4 +1,8 @@
 // dashboard.js
+const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+  ? 'http://127.0.0.1:3000' 
+  : '';
+
 
 // Função para verificar token
 async function verifyToken() {
@@ -12,7 +16,7 @@ async function verifyToken() {
   }
 
   try {
-    const res = await fetch("/protected", { // rota protegida no backend
+    const res = await fetch(`${API_BASE}/protected`, { // rota protegida no backend
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -43,7 +47,7 @@ async function fetchDashboardData() {
       return;
     }
 
-    const response = await fetch("/api/incidents/summary", {
+    const response = await fetch(`${API_BASE}/api/incidents/summary`, {
       headers: {
         "Authorization": `Bearer ${token}`
       }

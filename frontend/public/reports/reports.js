@@ -1,3 +1,7 @@
+const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+    ? 'http://127.0.0.1:3000' 
+    : '';
+
 document.addEventListener('DOMContentLoaded', () => {
     const filterForm = document.getElementById('report-filters');
     const exportPdfBtn = document.getElementById('export-pdf');
@@ -19,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const params = new URLSearchParams(new FormData(filterForm));
         
         try {
-            const response = await fetch(`/api/incidents?${params.toString()}`);
+            const response = await fetch(`${API_BASE}/api/incidents?${params.toString()}`);
             if (!response.ok) throw new Error('Failed to fetch reports');
             
             const data = await response.json();
@@ -55,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const params = new URLSearchParams(new FormData(filterForm));
         
         try {
-            const response = await fetch(`/api/incidents/report/pdf?${params.toString()}`);
+            const response = await fetch(`${API_BASE}/api/incidents/report/pdf?${params.toString()}`);
             if (!response.ok) throw new Error('Failed to generate PDF');
             
             const blob = await response.blob();

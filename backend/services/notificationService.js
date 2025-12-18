@@ -1,5 +1,6 @@
 const User = require("../models/userModel");
 const nodemailer = require("nodemailer");
+const { sendSlackNotification } = require("../slack");
 
 // ---- Fila em memória (simples e suficiente para frequência) ----
 let queue = [];
@@ -35,6 +36,16 @@ function alreadySent(userId, incidentId, action) {
 // ---- colocar na fila ----
 function queueNotification(user, incident, action) {
     console.log(`Queueing notification: User=${user.email}, Action=${action}`);
+    
+    // Slack notification (immediate, not queued)
+    // Only send to Slack if it's a new incident or relevant update
+    // We use a simple check to avoid duplicate slack pings if multiple users notified
+    const slackKey = `slack-${incident._id}-${action}`;
+    if (!sent.has(slackKey)) {
+        sent.add(slackKey);
+        sendSlackNotification(incident).catch(err => console.error("Slack error:", err));
+    }
+
     queue.push({
         userId: user._id,
         email: user.email,

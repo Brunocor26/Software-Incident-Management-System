@@ -12,6 +12,7 @@ app.use('/uploads', express.static('uploads'));
 
 //Configurar CORS
 app.use(cors({
+  origin: true,
   credentials: true
 }));
 

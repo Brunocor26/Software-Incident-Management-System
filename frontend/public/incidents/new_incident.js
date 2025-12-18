@@ -1,3 +1,7 @@
+const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+  ? 'http://127.0.0.1:3000' 
+  : '';
+
 // ---------- UTILS ----------
 const $ = q => document.querySelector(q);
 
@@ -26,7 +30,7 @@ form.addEventListener('submit', e => {
   }
 
   // send to API
-  fetch('/api/incidents', {
+  fetch(`${API_BASE}/api/incidents`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
