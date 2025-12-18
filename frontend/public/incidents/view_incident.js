@@ -111,7 +111,9 @@ async function loadIncident() {
     alert('Error loading incident');
   }
 }
-await loadIncident();
+loadIncident().catch(err => {
+    console.error("Critical error loading incident:", err);
+});
 
 // ---------- EDIT / SAVE ----------
 btnEdit.addEventListener('click', () => {
