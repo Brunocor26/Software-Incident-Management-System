@@ -1,4 +1,4 @@
-const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+const API_BASE = globalThis.location.hostname === 'localhost' || globalThis.location.hostname === '127.0.0.1' 
   ? 'http://127.0.0.1:3000' 
   : '';
 
@@ -21,13 +21,13 @@ const dropZone = $('#drop-zone');
 const fileInput = $('#file-input');
 const fileList = $('#file-list');
 
-let attachments = []; // { name, size, dataURL }
+let attachments = [];
 
 // ---------- LOAD INCIDENT ----------
 async function loadIncident() {
   const token = localStorage.getItem('token');
   if (!token) {
-    window.location.href = "../login/login.html";
+    globalThis.location.href = "../login/login.html";
     return;
   }
 
@@ -40,7 +40,7 @@ async function loadIncident() {
 
     if (!res.ok) {
       if (res.status === 401) {
-        window.location.href = "../login/login.html";
+        globalThis.location.href = "../login/login.html";
         return;
       }
       alert('Incident not found');
@@ -111,7 +111,7 @@ async function loadIncident() {
     alert('Error loading incident');
   }
 }
-loadIncident();
+await loadIncident();
 
 // ---------- EDIT / SAVE ----------
 btnEdit.addEventListener('click', () => {
@@ -125,7 +125,7 @@ form.addEventListener('submit', async e => {
   e.preventDefault();
   const token = localStorage.getItem('token');
   if (!token) {
-    window.location.href = "../login/login.html";
+    globalThis.location.href = "../login/login.html";
     return;
   }
 
@@ -264,9 +264,9 @@ if (btnCreateBranch) {
     // Slug: title to lower, remove special chars, replace space with -
     const slug = titleInp.value
       .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, '')
+      .replaceAll(/[^a-z0-9\s-]/g, '')
       .trim()
-      .replace(/\s+/g, '-')
+      .replaceAll(/\s+/g, '-')
       .substring(0, 30); // limit length
 
     const branchName = prompt("Branch Name:", `feature/INC-${id}-${slug}`);
@@ -342,9 +342,9 @@ function initGitSidebar(incident) {
   } else {
     const slug = incident.title
       .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, '')
+      .replaceAll(/[^a-z0-9\s-]/g, '')
       .trim()
-      .replace(/\s+/g, '-')
+      .replaceAll(/\s+/g, '-')
       .substring(0, 40);
     inpBranchName.value = `feature/INC-${incident._id}-${slug}`;
 

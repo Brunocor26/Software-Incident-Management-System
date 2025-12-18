@@ -1,4 +1,4 @@
-const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+const API_BASE = globalThis.location.hostname === 'localhost' || globalThis.location.hostname === '127.0.0.1' 
   ? 'http://127.0.0.1:3000' 
   : '';
 
@@ -6,7 +6,7 @@ const API_BASE = window.location.hostname === 'localhost' || window.location.hos
 async function getIncidents() {
   const token = localStorage.getItem('token');
   if (!token) {
-    window.location.href = "../login/login.html";
+    globalThis.location.href = "../login/login.html";
     return [];
   }
 
@@ -19,7 +19,7 @@ async function getIncidents() {
 
     if (!res.ok) {
       if (res.status === 401) {
-        window.location.href = "../login/login.html";
+        globalThis.location.href = "../login/login.html";
         return [];
       }
       throw new Error('Failed to fetch incidents');
@@ -34,12 +34,12 @@ async function getIncidents() {
 }
 
 // ---------- HELPERS ----------
-const capitalize = s => (!s ? '' : String(s)[0].toUpperCase() + String(s).slice(1).toLowerCase());
+const capitalize = s => (s ? String(s)[0].toUpperCase() + String(s).slice(1).toLowerCase() : '');
 const formatStatus = st => ({ open: 'Open', 'in-progress': 'In Progress', closed: 'Closed' }[st] || st);
 const statusClass = st => (st === 'in-progress' ? 'progress' : st);
 const escapeHtml = str => String(str)
-  .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-  .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  .replaceAll('&', '&amp;').replaceAll('<', '&lt;')
+  .replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 
 const priorityIcon = {
   high: `<svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 1a.75.75 0 01.75.75v10.5a.75.75 0 01-1.5 0V1.75A.75.75 0 0110 1zM5.05 6.05a.75.75 0 011.06 0L10 9.94l3.89-3.89a.75.75 0 111.06 1.06L11.06 11l3.89 3.89a.75.75 0 11-1.06 1.06L10 12.06l-3.89 3.89a.75.75 0 01-1.06-1.06L8.94 11 5.05 7.11a.75.75 0 010-1.06z" clip-rule="evenodd"/></svg>`,
@@ -146,12 +146,12 @@ async function init() {
     if (filterSelect) {
       filterSelect.addEventListener('change', async (e) => {
         const value = e.target.value;
-        if (!value) {
-          renderTable(allIncidents);
-        } else {
+        if (value) {
           const [key, val] = value.split(':');
           const filtered = allIncidents.filter(i => i[key] === val);
           renderTable(filtered);
+        } else {
+          renderTable(allIncidents);
         }
       });
     }
@@ -225,7 +225,7 @@ async function init() {
         });
     }
 
-    window.addEventListener('click', (e) => {
+    globalThis.addEventListener('click', (e) => {
         if (e.target === assignModal) {
             assignModal.classList.add('hidden');
         }

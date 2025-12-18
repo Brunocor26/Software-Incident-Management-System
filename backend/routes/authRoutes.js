@@ -10,12 +10,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 router.post('/', async (req, res) => {
   const { email, password } = req.body;
 
-  console.log("Email recebido:", email);
-  console.log("Senha recebida:", password);
-  console.log("JWT_SECRET:", JWT_SECRET);
-
   if (!email || !password) {
-    console.log("Falha: campos obrigatórios não preenchidos");
     return res.status(400).json({ error: 'Email e senha são obrigatórios.' });
   }
 
@@ -23,20 +18,16 @@ router.post('/', async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      console.log("Falha: usuário não encontrado");
       return res.status(404).json({ error: 'Usuário não encontrado.' });
     }
 
     const passwordMatch = await bcrypt.compare(password, user.password);
-    console.log("Resultado comparação senha:", passwordMatch);
 
     if (!passwordMatch) {
-      console.log("Falha: senha incorreta");
       return res.status(401).json({ error: 'Senha incorreta.' });
     }
 
     if (!JWT_SECRET) {
-      console.log("Falha: JWT_SECRET não definido");
       return res.status(500).json({ error: 'Erro no servidor.' });
     }
 
@@ -53,7 +44,6 @@ router.post('/', async (req, res) => {
       { expiresIn: '4h' }
     );
 
-    console.log("Login bem-sucedido, token criado:", token);
 
     return res.status(200).json({
       message: 'Login bem-sucedido!',

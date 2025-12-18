@@ -1,4 +1,4 @@
-const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL || "https://hooks.slack.com/services/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";
+const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL; 
 
 async function sendSlackNotification(incident) {
   const message = {

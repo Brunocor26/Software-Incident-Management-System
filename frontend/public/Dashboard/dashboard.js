@@ -1,5 +1,5 @@
 // dashboard.js
-const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+const API_BASE = globalThis.location.hostname === 'localhost' || globalThis.location.hostname === '127.0.0.1' 
   ? 'http://127.0.0.1:3000' 
   : '';
 
@@ -11,7 +11,7 @@ async function verifyToken() {
   if (!token) {
     // Se não houver token, redireciona para login
     alert("Precisa de fazer login primeiro.");
-    window.location.href = "../login/login.html";
+    globalThis.location.href = "../login/login.html";
     return false;
   }
 
@@ -29,12 +29,12 @@ async function verifyToken() {
     } else {
       // Token inválido ou expirado
       alert("Token inválido ou expirado. Faça login novamente.");
-      window.location.href = "../login/login.html";
+      globalThis.location.href = "../login/login.html";
       return false;
     }
   } catch (err) {
     console.error("Erro ao verificar token:", err);
-    window.location.href = "../login/login.html";
+    globalThis.location.href = "../login/login.html";
     return false;
   }
 }
@@ -43,7 +43,7 @@ async function fetchDashboardData() {
   try {
     const token = localStorage.getItem("token");
     if (!token) {
-      window.location.href = "../login/login.html";
+      globalThis.location.href = "../login/login.html";
       return;
     }
 
@@ -55,7 +55,7 @@ async function fetchDashboardData() {
 
     if (!response.ok) {
       if (response.status === 401) {
-        window.location.href = "../login/login.html";
+        globalThis.location.href = "../login/login.html";
       }
       throw new Error("Failed to fetch dashboard data");
     }
@@ -88,33 +88,41 @@ function updateDashboard(data) {
     const tr = document.createElement("tr");
 
     const titleCell = document.createElement("td");
-    titleCell.setAttribute('data-label', 'Title');
+    titleCell.dataset.label = 'Title';
     titleCell.textContent = incident.title;
 
     const categoryCell = document.createElement("td");
-    categoryCell.setAttribute('data-label', 'Category');
+    categoryCell.dataset.label = 'Category';
     categoryCell.textContent = incident.category;
 
     const priorityCell = document.createElement("td");
-    priorityCell.setAttribute('data-label', 'Priority');
+    priorityCell.dataset.label = 'Priority';
     const prioritySpan = document.createElement("span");
     prioritySpan.textContent = incident.priority;
-    prioritySpan.className = 'pill ' + (incident.priority === "high" ? 'pill-high' :
-      incident.priority === "medium" ? 'pill-medium' :
-        'pill-low');
+    let priorityClass = 'pill-low';
+    if (incident.priority === "high") {
+      priorityClass = 'pill-high';
+    } else if (incident.priority === "medium") {
+      priorityClass = 'pill-medium';
+    }
+    prioritySpan.className = 'pill ' + priorityClass;
     priorityCell.appendChild(prioritySpan);
 
     const dateCell = document.createElement("td");
-    dateCell.setAttribute('data-label','CreationDate');
+    dateCell.dataset.label = 'CreationDate';
     dateCell.textContent = new Date(incident.createdAt).toLocaleDateString();
 
     const statusCell = document.createElement("td");
-    statusCell.setAttribute('data-label', 'Status');
+    statusCell.dataset.label = 'Status';
     const statusSpan = document.createElement("span");
     statusSpan.textContent = incident.status;
-    statusSpan.className = 'status ' + (incident.status === "open" ? 'status-open' :
-      incident.status === "in-progress" ? 'status-progress' :
-        'status-closed');
+    let statusClass = 'status-closed';
+    if (incident.status === "open") {
+      statusClass = 'status-open';
+    } else if (incident.status === "in-progress") {
+      statusClass = 'status-progress';
+    }
+    statusSpan.className = 'status ' + statusClass;
     statusCell.appendChild(statusSpan);
 
     tr.appendChild(titleCell);
@@ -139,6 +147,6 @@ const incidentsLink = document.getElementById("incidents-link");
 if (incidentsLink) {
   incidentsLink.addEventListener("click", (e) => {
     e.preventDefault();
-    window.location.href = "../incidents/incidents.html";
+    globalThis.location.href = "../incidents/incidents.html";
   });
 }

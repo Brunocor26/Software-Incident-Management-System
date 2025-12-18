@@ -1,4 +1,4 @@
-const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+const API_BASE = globalThis.location.hostname === 'localhost' || globalThis.location.hostname === '127.0.0.1' 
     ? 'http://127.0.0.1:3000' 
     : '';
 
@@ -63,13 +63,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!response.ok) throw new Error('Failed to generate PDF');
             
             const blob = await response.blob();
-            const url = window.URL.createObjectURL(blob);
+            const url = globalThis.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
             a.download = 'incident_report.pdf';
             document.body.appendChild(a);
             a.click();
-            window.URL.revokeObjectURL(url);
+            globalThis.URL.revokeObjectURL(url);
             a.remove();
         } catch (error) {
             console.error('Error exporting PDF:', error);
@@ -77,12 +77,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function getBadgeClass(status) {
-        switch (status) {
-            case 'open': return 'danger';
-            case 'in-progress': return 'warning';
-            case 'closed': return 'success';
-            default: return 'secondary';
-        }
-    }
 });
+
+function getBadgeClass(status) {
+    switch (status) {
+        case 'open': return 'danger';
+        case 'in-progress': return 'warning';
+        case 'closed': return 'success';
+        default: return 'secondary';
+    }
+}

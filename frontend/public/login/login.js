@@ -1,4 +1,4 @@
-const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+const API_BASE = globalThis.location.hostname === 'localhost' || globalThis.location.hostname === '127.0.0.1' 
     ? 'http://127.0.0.1:3000' 
     : '';
 
@@ -42,7 +42,7 @@ form.addEventListener('submit', async (e) => {
             localStorage.setItem('token', data.token);
 
             // Redirecionar para o dashboard
-            window.location.href = '../Dashboard/dashboard.html';
+            globalThis.location.href = '../Dashboard/dashboard.html';
         }
         else {
             msg.textContent = data.error;

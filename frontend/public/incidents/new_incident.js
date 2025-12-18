@@ -1,4 +1,4 @@
-const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+const API_BASE = globalThis.location.hostname === 'localhost' || globalThis.location.hostname === '127.0.0.1' 
   ? 'http://127.0.0.1:3000' 
   : '';
 
@@ -25,7 +25,7 @@ form.addEventListener('submit', e => {
 
   const token = localStorage.getItem('token');
   if (!token) {
-    window.location.href = "../login/login.html";
+    globalThis.location.href = "../login/login.html";
     return;
   }
 
