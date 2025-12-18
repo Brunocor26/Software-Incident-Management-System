@@ -1,6 +1,6 @@
 # 📋 Incident Manager – Frontend
 
-> Lightweight, responsive web app for creating, viewing and tracking IT incidents.  
+> Lightweight, minimalist, responsive web app for creating, viewing and tracking IT incidents.  
 > Built with **vanilla HTML / CSS / JS** – no frameworks, no build step.
 
 ---
@@ -38,7 +38,7 @@ We track **user stories**, **problems** and **tasks** in **[Jira Software](https
 | --------------- | ------------------------------------------------------------------------- |
 | Product backlog | https://bafc2.atlassian.net/jira/software/projects/SCRUM/boards/1/backlog |
 | Active board    | https://your-team.atlassian.net/jira/software/projects/IM/boards/1        |
-| Current sprint  | Sprint 4                                                                  |
+| Current sprint  | Sprint 5                                                                  |
 
 ### Definition of Done (DoD)
 
@@ -52,8 +52,8 @@ We track **user stories**, **problems** and **tasks** in **[Jira Software](https
 
 ## 👥 Team composition for sprint 4
 
-- **Product Owner** – Bruno Correia
-- **Scrum Master** – Vasco Colaço
+- **Product Owner** – Vasco Colaço
+- **Scrum Master** – Bruno Correia
 - **Devs** – Daniel Basílio & Alexandre Santos & Henrique Laia
 
 ---
@@ -109,7 +109,8 @@ npx playwright show-report
 
 ```
 
-## 🚀 Non-Functional Requirements (RNFs)
+
+## Non-Functional Requirements (RNFs)
 
 The system adheres to the following non-functional requirements:
 
@@ -118,3 +119,8 @@ The system adheres to the following non-functional requirements:
 - **RNF3**: The system must use secure authentication and data encryption.
 - **RNF4**: The system must be accessible via web browsers (Chrome, Firefox, Microsoft Edge, Safari) and compatible with mobile devices.
 - **RNF6**: The interface must follow good usability practices and intuitive design.
+
+
+# Now Available online!
+
+Check us out in: https://software-incident-management-system.vercel.app/
